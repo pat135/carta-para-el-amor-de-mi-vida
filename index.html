@@ -1,0 +1,1391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carta Romántica para Kenia</title>
+    <style>
+        /* Estilos del menú circular */
+        .menu-wheel {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 100px;
+            height: 300px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            z-index: 10;
+        }
+
+        .menu-btn {
+            background-color: #b7d8ff;
+            color: #333;
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+        }
+
+        .menu-btn:hover {
+            transform: scale(1.1);
+            background-color: #9bbdc7;
+        }
+
+        /* Imagen de corazones */
+        .hearts-intro {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 250px;
+            height: 250px;
+            background: url("kenia/Diseño sin título (1).png") no-repeat center center;
+            background-size: contain;
+            z-index: 10;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px); }
+        }
+
+        /* Fondo romántico adicional */
+        .additional-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("kenia/Captura de pantalla 2025-08-23 082404.jpg") no-repeat center center;
+            background-size: cover;
+            opacity: 0.2;
+            z-index: -2;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: 'Arial', sans-serif;
+            overflow: hidden;
+            position: relative;
+            background-color: #f9f3f3;
+        }
+
+        .romantic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("kenia/Captura de pantalla 2025-07-26 203321.jpg") no-repeat center center;
+            background-size: cover;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: -1;
+            filter: brightness(0.8) blur(1px);
+        }
+
+        .envelope-container {
+            position: relative;
+            width: 320px;
+            height: 220px;
+            z-index: 2;
+        }
+
+        .closed-envelope {
+            background-color: #afcad6;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+            z-index: 2;
+            transition: all 0.5s ease;
+        }
+
+        .closed-envelope:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            width: 0;
+            height: 0;
+            border-left: 160px solid transparent;
+            border-right: 160px solid transparent;
+            border-top: 110px solid #9bc4c7;
+            transform-origin: top;
+            transition: all 0.8s ease;
+        }
+
+        .open-btn {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #afd6b2;
+            cursor: pointer;
+            z-index: 3;
+            font-size: 18px;
+        }
+
+        .letter {
+            position: absolute;
+            background-color: rgba(175, 208, 214, 0.9);
+            width: 280px;
+            height: 480px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.1);
+            transform-origin: center;
+            opacity: 0;
+            transition: all 0.8s ease;
+            z-index: 1;
+            overflow-y: auto;
+            line-height: 1.6;
+            border-radius: 5px;
+            text-align: center;
+            backdrop-filter: blur(2px);
+        }
+
+        .close-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #afd6d4;
+            color: #333;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 4;
+            display: none;
+            font-size: 18px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .love-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 72px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 5;
+            display: none;
+        }
+
+        /* Segunda carta (cosas que amo) */
+        .second-letter {
+            position: absolute;
+            background-color: rgba(175, 214, 214, 0.9);
+            width: 280px;
+            height: 480px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transform-origin: center;
+            opacity: 0;
+            transition: all 0.8s ease;
+            z-index: 6;
+            line-height: 1.6;
+            border-radius: 5px;
+            text-align: center;
+            backdrop-filter: blur(2px);
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Tercera carta (metas) */
+        .third-letter {
+            position: absolute;
+            background-color: rgba(175, 205, 214, 0.9);
+            width: 280px;
+            height: 480px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transform-origin: center;
+            opacity: 0;
+            transition: all 0.8s ease;
+            z-index: 7;
+            line-height: 1.6;
+            border-radius: 5px;
+            text-align: center;
+            backdrop-filter: blur(2px);
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Cuarta carta (preguntas) */
+        .questions-letter {
+            position: absolute;
+            background-color: rgba(214, 175, 205, 0.9);
+            width: 280px;
+            height: 480px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transform-origin: center;
+            opacity: 0;
+            transition: all 0.8s ease;
+            z-index: 8;
+            line-height: 1.6;
+            border-radius: 5px;
+            text-align: center;
+            backdrop-filter: blur(2px);
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        /* Quinta carta (Galería de fotos) */
+        .gallery-letter {
+            position: absolute;
+            background-color: rgba(205, 214, 175, 0.9);
+            width: 300px;
+            height: 500px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transform-origin: center;
+            opacity: 0;
+            transition: all 0.8s ease;
+            z-index: 9;
+            line-height: 1.6;
+            border-radius: 5px;
+            text-align: center;
+            backdrop-filter: blur(2px);
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .second-letter h2, .third-letter h2, .questions-letter h2, .gallery-letter h2 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .open .closed-envelope {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        .open .closed-envelope:before {
+            transform: rotateX(180deg);
+            opacity: 0;
+        }
+
+        .open .letter {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            z-index: 3;
+        }
+
+        .open .romantic-bg {
+            opacity: 1;
+        }
+
+        .heart {
+            color: #afcad6;
+            font-size: 20px;
+            animation: beat 1s infinite alternate;
+            display: inline-block;
+        }
+
+        @keyframes beat {
+            to {
+                transform: scale(1.2);
+            }
+        }
+
+        .signature {
+            font-style: italic;
+            margin-top: 20px;
+            text-align: right;
+        }
+
+        h2 {
+            color: #333;
+            margin-bottom: 15px;
+        }
+
+        .love-image {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 15px auto;
+            border: 3px solid #afcbd6;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Botón sorpresa */
+        .surprise-btn {
+            background-color: #afcdd6;
+            color: #333;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            margin: 20px auto;
+            display: block;
+        }
+
+        /* Opciones de preguntas */
+        .question-options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 20px;
+        }
+
+        .question-btn {
+            background-color: #d6afc9;
+            color: #333;
+            border: none;
+            padding: 10px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .question-btn:hover {
+            background-color: #c99bb8;
+        }
+
+        .question-btn.correct {
+            background-color: #afd6b2;
+        }
+
+        .question-btn.incorrect {
+            background-color: #d6afaf;
+        }
+
+        /* Navegación de preguntas */
+        .question-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+        }
+
+        .nav-btn {
+            background-color: #afcad6;
+            color: #333;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        /* Galería de fotos */
+        .photo-gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            aspect-ratio: 1/1;
+        }
+
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.05);
+        }
+
+        /* Efectos de confeti */
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background-color: #afd6b2;
+            opacity: 0;
+            z-index: 9999;
+            animation: confetti-fall 5s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            0% {
+                transform: translateY(-100vh) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Botón para activar corazones flotantes */
+        .hearts-btn {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #afd6d6;
+            color: #333;
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+            z-index: 10;
+        }
+
+        .hearts-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            background-color: #9bc7bc;
+        }
+
+        /* Estilos para la lluvia Matrix */
+        .matrix-effect {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1000;
+            display: none;
+        }
+
+        .matrix-canvas, .explosion-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        .close-matrix-btn {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #2e00fa;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 1002;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+
+        /* Animación de dado */
+        .dice-animation {
+            display: inline-block;
+            animation: diceRoll 0.5s ease-in-out;
+        }
+
+        @keyframes diceRoll {
+            0% { transform: rotate(0deg) scale(0.5); opacity: 0; }
+            50% { transform: rotate(180deg) scale(1.2); opacity: 1; }
+            100% { transform: rotate(360deg) scale(1); opacity: 1; }
+        }
+
+        /* Contador de preguntas */
+        .question-counter {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Fondo adicional -->
+    <div class="additional-bg"></div>
+
+    <!-- Imagen de corazones flotante -->
+    <div class="hearts-intro"></div>
+
+    <!-- Menú lateral circular -->
+    <div class="menu-wheel">
+        <button class="menu-btn" id="showFirstLetterBtn">Carta</button>
+        <button class="menu-btn" id="showThirdLetterBtn">Metas</button>
+        <button class="menu-btn" id="showQuestionsBtn">Preguntas</button>
+        <button class="menu-btn" id="showGalleryBtn">Galería</button>
+    </div>
+
+    <!-- Botón para activar efecto Matrix -->
+    <button class="hearts-btn" id="heartsBtn"><br>Mensajes</button>
+
+    <!-- Fondo con TU IMAGEN -->
+    <div class="romantic-bg" id="background"></div>
+
+    <!-- Mensaje TE AMO (oculto inicialmente) -->
+    <div class="love-message" id="loveMessage">I LOVE YOU MY PANDITA</div>
+
+    <!-- Segunda carta (cosas que amo) -->
+    <div class="second-letter" id="secondLetter">
+        <h2>Cosas que me gustan de ti</h2>
+        <p>1- que te guste el color azul,</p>
+        <p>2- tu pechito hermoso</p>
+        <p>3- Tus ojos hermosos</p>
+        <p>4- Tu boquita después de una paleta</p>
+        <p>5- Tu cuerpo lindo</p>
+        <p>6- Tu forma de hablar conmigo</p>
+        <p>7- Tu carita linda</p>
+        <p>8- que siempre que te digo que eres hermosa lo niegas aunque sea verdad</p>
+        <p>9- Tu forma de ser</p>
+        <p>10- Que eres mi novia</p>
+        <p>11- verte cocinando</p>
+        <p>12- Que me haces reír</p>
+        <p>13- Que me haces feliz</p>
+        <p>14- Que me haces sentir especial</p>
+        <p>15- Que me haces sentir amado</p>
+        <p>16- Que me haces sentir que soy tuyo</p>
+        <p>17- Que cuando sera el dia que hagamos llamada por horas</p>
+        <p>18- que tengas un cuerpo hermosooooooooooooooooooooooooooooooooooooooooooooooo con esa panshita hermosaaaaaaaaaa</p>
+        <p>19- que hagas voz dde niña amor amo eso enserioooooo</p>
+        <p>20- sobre todo que seas tu quien me ame y no me deje ir jamas y que hace que me sienta seguroooo</p>
+        <P>21- AMO que intentemos arreglar las cosas antes de mimir </P>
+        <p>22- AMO verte dormir, es lo mas bonito del mundo</p>
+        <p>23- amo cuando te enojas,</p>
+        <p>24- que escuchamos musica juntos</p>
+        <p>25- que aunque sea tu novio lindo, me regañes ayyyyyyyyyyyyy que bonito amor amor am0or amor amor tratame asiiii</p>
+        <P> yo el menos sumiso sdksjdkasjkdkdjaskdjkdjaskjdakjadk tratame asi y me quedo aunque me seas infiel</P>
+        <p>26- que me digas bonito, nunca me dicen cosas asi es muy bonito que me veas con esos ojos, oajala nunca los habras y veas lo feo que toy</p>
+        <p>27- que juguemos aunque digas que no te gusta</p>
+        <p>28- que te enojes ya dije??? ajdkjdkjasdksadkd</p>
+        <p>29- que me esperes que me tengas la paciensia que me tienes y no dejarme por algo minimo</p>
+        <p>30- que me ames tanto como yo a ti</p>
+        <p>31- que me hagas sentir que soy el hombre mas feliz del mundo, aunque ya lo haya dicho te lo tengo que recordar</p>
+        <p>32- que me hagas sentir que soy el hombre mas afortunado del mundo</p>
+        <p>33- que me hagas sentir que soy el hombre mas amado del mundo</p>
+        <p>34- que me hagas sentir que soy el hombre mas especial del mundo</p>
+        <p>35- que me hagas sentir que soy el hombre mas querido del mundo</p>
+        <p>36- que me hagas sentir que soy el hombre mas deseado del mundo</p>
+        <p>37- que me hagas sentir que soy el hombre mas importante del mundo</p>
+        <p>38- que me hagas sentir que soy el hombre mas valorado del mundo</p>
+        <p>39- que me hagas sentir que soy el hombre mas respetado del mundo</p>
+        <p>40- que me hagas sentir que soy el hombre mas bonito del mundo</p>
+        <p> coming soon...</p>
+        <button class="surprise-btn" id="closeSecondLetter">Cerrar</button>
+    </div>
+
+    <!-- Tercera carta (metas) -->
+    <div class="third-letter" id="thirdLetter">
+        <h2>NUESTRAS METAS</h2>
+        <p>Cosas que queremos lograr juntos:</p>
+        <p>1- Conocernos en persona</p>
+        <p>2- Viajar juntos a lugares increíbles</p>
+        <p>3- Crecer juntos como pareja</p>
+        <p>4- Apoyarnos en nuestros sueños</p>
+        <p>5- Construir un futuro lleno de amor</p>
+        <p>6- Pasar muchas noches hablando hasta tarde</p>
+        <p>7- Crear miles de recuerdos juntos</p>
+        <p>8- Superar cualquier obstáculo que se presente</p>
+        <p>9- Ser felices el uno con el otro</p>
+        <p>10- Amarnos cada día más</p>
+        <p>11- Formar una familia llena de amor y alegría</p>
+        <p>12- Apoyarnos mutuamente en nuestras metas personales</p>
+        <p>13- Celebrar cada aniversario con momentos especial</p>
+        <p>14- Aprender y crecer juntos en todos los aspectos de la vida</p>
+        <p>15- Ser el mejor equipo en todo lo que hagamos</p>
+        <p>16- Hacer que c ada día cuentey vivir siempre con la misma intensidad</p>
+        <p>17- Mantener viva la chispa del amor con sorpresas y detalles</p>
+        <p>18- Envejecer juntos y seguir amándonos como el primer día</p>
+        <p>19- Apoyarnos en los momentos difíciles y celebrar los buenos</p>
+        <p>20- Ser siempre honestos y comunicativos el uno con el otro</p>
+        <p> coming soon...</p>
+        <button class="surprise-btn" id="closeThirdLetter">Cerrar</button>
+    </div>
+
+    <!-- Cuarta carta (preguntas) -->
+    <div class="questions-letter" id="questionsLetter">
+        <h2>Preguntas</h2>
+        <div class="question-counter" id="questionCounter">Pregunta 1 de 9</div>
+        <p id="question-text">¿En qué mes nos conocimos?</p>
+        <div class="question-options" id="questionOptions">
+            <!-- Las opciones se generarán dinámicamente -->
+        </div>
+        <p id="question-feedback"></p>
+        
+        <div class="question-nav">
+            <button class="nav-btn" id="prevQuestionBtn" disabled>← Anterior</button>
+            <button class="nav-btn" id="nextQuestionBtn">Siguiente →</button>
+        </div>
+        
+        <button class="surprise-btn" id="closeQuestionsLetter">Cerrar</button>
+    </div>
+
+    <!-- Quinta carta (Galería de fotos) -->
+    <div class="gallery-letter" id="galleryLetter">
+        <h2>Tu Galería</h2>
+        <p>fotos que tomo en momentos donde mas gracia e tenido</p>
+        
+        <div class="photo-gallery" id="photoGallery">
+            <!-- Las imágenes se generarán dinámicamente -->
+        </div>
+        
+        <button class="surprise-btn" id="closeGalleryLetter">Cerrar</button>
+    </div>
+
+    <!-- Botón Cerrar (fuera de la carta) -->
+    <button class="close-btn" id="closeBtn">Cerrar</button>
+
+    <div class="envelope-container">
+        <div class="closed-envelope" id="envelope"></div>
+        <button class="open-btn" id="openBtn">Abrir</button>
+        <div class="letter" id="letter">
+            <h2>Kenia Iyari,</h2>
+            <p>Mejor dicho, el amor de my vida <span class="heart">❤️</span></p>
+
+            <img src="kenia/Captura de pantalla 2025-06-26 192010.jpg" alt="Pareja feliz" class="love-image">
+
+            <p>Te amo demasiado, eres mi niña, mi vida, mi amor jsjsjsjsjs</p>
+            <p>Un día nos veremos y nos daremos todo lo que siempre hemos soñado</p>
+            <p>Esto lo hice para nuestro primer mes, aunque no sabía si terminaría antes del 10 jsjsjjsjs</p>
+            <p>Mi amor es muy sincero y quiero que sepas que siempre estaré para ti</p>
+            <p>Siempre, siempre me tendrás detrás tuyo jsjsjsjjssjjs te amo te amo</p>
+            <p>Eres mi novia, mi niña, mi preciosa, mi esposa.</p>
+            <p>Repito, siempre estaré para ti, te amo demasiado</p>
+            <p>Te voy a hacer lo mismo que le hago al capibara</p>
+            <p>Me sentí muy feliz el día que nos quedamos hasta tarde hablando</p>
+            <p>Ese día conociste a Pingu, es mi versión más rara que pudiste conocer</p>
+            <p>Y aun así no se te hizo raro, eso me impresionó y me dio la confianza</p>
+            <p>Para hacer todo esto, de verdad te amo mi niña hermosa</p>
+            <p> 5 MES YAAAAAAAAAAAA ABAJO DE AKI</p>
+            <p>ya van 5 meses de querernos tanto llenos de amor y mucha locuras a lo gey ksjdkjdksjikdjksd, se que esta carata ya la habia hecho pero solo recupere una parte asi que se empezo casi que a la mitad</p>
+            <p>perdoname si no es lo que esperabas, puede que este mes como era el 5 pensarias que te daria algo mejor amor pero yo siempre que veo la carta o me acordaba de ella queria mejorarla pero ya habia perdido el codigo ahora lo rercupere y lo medio mejore dskadjaksjsdkdjas</p>
+            <p>esto no es mucho amor lo se, es lo que mas me gusta para la persona que en un principio me gusto y futuramente sera mi esposa dskjdksjdksj, yo no me esperaba esto mucho menos de una noche de platicar kdjskdj es algo new </p>
+            <p>no puedo creer aun que de un lugar tan raro como rublox salio el amor de mi vida, enserio yo en un inicio pense que solo querias jugar conmigo o pasar el rato, luego vi que no, me dio miedo pq no se no soy mucho de eso</p>
+            <P>asi que una relacion asi es new pa mi amor perdoname si exagero o hago las cosas mal amor no es mi intencion hacerte mal MENOS HACERTE DAÑO PORQUE ERES LA NIÑA DE MI CORAZON MI TRALALERITA</P>
+            <p>si hiciera algo muy malo osea hacerte daño no me lo perdonaria ami mismo por dañar al amor de my vida, dejando lo tite de lado espero que sigamos asi por años hasta que nos muramos o decidas cambiarme por julian pq vive mas cerca ;( pero bno njdksjdkjsdkds</p>
+            <p>amor muchas gracias por estos 5 meses para mi han sido los mejores 5 meses de my vida entera "que bonito suenas amor 23:15 asio espero suenes en diciembre jdskjdks" ay amoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooor te amo</p>
+            <P>te amo demaciado amor enserio eres mi princesa hermosa divina, la reina de my mundo, felices 5 meses amooooooooooooooooooor te amoooooo sdjksdjskdjisjdk encuerate</P>
+            <p>//6 meses aki mensota tontota</p>
+            <p>si ami me huvieran dicho que tu serias mi nobia en un futuro yo no me la creeria eres la niña mas hermosa en este mundo solo tengo ojitos para ti para nadie mas, sin importar lo linda que creas que ellas puedan ser tu eres 10000 veces mas linda que ellas ante mis ojos, poruqe tu eres quien me trata bonito me hace cariñitos me ahce sentir escuchado me hace sentir amado y me hace sentir feliz and es lo que mas valoro</p>
+            <p>muchas gracias por dejarme estar a tu lado durante 6 meses repito cada mes, que es el mejor lo se lo se pero es que es la truth contigo hago cosas con quien nadie mas haria, con nadie pase mas de 4 horas en llamada pq me aburria, contigo no me aburro cada rato tengo algo que decir o pensar nunca me dejas solo siempre estas para mi AMO AMOR se que esta carta solo le hago cosas minimas pero es tardado moverle al codigo y saber donde mover sin destruir todo y mas con que apenas boy aprendiendo espero y valores lo que estoy haciendo aque pueda tener errores, perdoname por ser un mal novio amor no un mal novio no lo soy pero si una mala compañia que no te deja estar con amigos, perdoname estoy intentado quitar eso de mi pero no se cada que hablas con otro mi cerebro ya penso 100000000000000000000000000000000  maneras en ñas que me podrias engañar sin que me de cuenta</p>
+            <p>estos 6 meses e tenido nuevas experiencias contigo, cosas que jamas pense hacer con alguien o que sinceramente ni conocia pero me hace feliz hacerlo contigo podria hacer cualquier cosa contigo, caminar por la calle un dia lluvioso, caminar en fundidora viendo a los patos, caminar por mi casa platicandote todo lo que quisiera hacer contigo, estar acostador en un lugar alto y ser el cielo yo abrazandote para que estemos bn, </p>
+            <p>se que estos son menos codigos te amo mucho amor deverdad te amo muchas gracias por estar conmigo </p>
+            <p>te amo mi niña hermosa divina preciosa, la reina de my mundo, felices 6 meses amooooooooooooooooooor te amoooooo sdjksdjskdjisjdk encuerate</p>
+            <p>//7 meses aki mensota tontota</p>
+            <p> coming soon...</p>
+            
+            <button class="surprise-btn" id="showSecondLetterBtn"> Descubre las cosas que amo de ti y tu cuerpesito</button>
+
+            <p class="signature">Con todo my amor,<br>Tu chilito con patas</p>
+        </div>
+    </div>
+
+    <!-- Efecto Matrix con explosión -->
+    <div class="matrix-effect" id="matrixEffect">
+        <canvas class="matrix-canvas" id="matrixCanvas"></canvas>
+        <canvas class="explosion-canvas" id="explosionCanvas"></canvas>
+        <button class="close-matrix-btn" id="closeMatrixBtn">Cerrar</button>
+    </div>
+
+    <script>
+        // Base de datos de preguntas
+        const questions = [
+            {
+                question: "1 ¿En qué mes nos conocimos?",
+                options: ["Enero", "Febrero", "Marzo", "Abril"],
+                correctAnswer: 2
+            },
+            {
+                question: "2 ¿Cuál es mi color favorito?",
+                options: ["morado", "Azul", "Verde", "Rosa"],
+                correctAnswer: 1
+            },
+            {
+                question: "3 ¿Qué animal me gusta mucho?",
+                options: ["Perro", "Gato", "Capibara", "Panda"],
+                correctAnswer: 2
+            },
+            {
+                question: "4 ¿Cómo te digo de cariño?",
+                options: ["Cariño", "Amor", "mor", "pandita"],
+                correctAnswer: 3
+            },
+            {
+                question: "5 ¿Qué nos gusta hacer juntos?",
+                options: ["Ver películas", "Jugar videojuegos", "Hablar por horas", "Todas las anteriores"],
+                correctAnswer: 3
+            },
+            {
+                question: "6 ¿que haremos en diciembre?",
+                options: ["culiar", "pegarle a tu hermana", "ver a tu papa", "todas las anteriores"],
+                correctAnswer: 3
+            },
+            {
+                question: "7 ¿que es lo que mas amo de ti?",
+                options: ["que eres atenta", "que estas bien hermosa", "que me hagas sentir celos", "banana"],
+                correctAnswer: 1
+            },
+            {
+                question: "8 ¿llamada mas larga que hemos hecho?",
+                options: ["4 horas", "20 horas", "21 horas", "43 horas"],
+                correctAnswer: 3
+            },
+            {
+                question: "9 ¿que me da mas miedo?",
+                options: ["perderte", "las arañas", "que me digas que aun me amas pero solo estas conmigo porque no sabes como decirme que no me amas", "perderte y las arañas"],
+                correctAnswer: 2
+            },
+                    
+            {
+                question: "10 quieres que lo siga mejorando o asi esta bien amor?",
+                options: ["si amor, me gusta mucho", "No gey no te amo", " esta bn asi"],
+                correctAnswer: 0
+            },
+        ];
+
+        // Base de datos de imágenes para la galería
+        // ¡AQUÍ ES DONDE DEBES AGREGAR LOS NOMBRES DE TUS IMÁGENES!
+        const galleryImages = [
+           "kenia/Captura de pantalla 2025-08-03 160132.jpg",
+           "kenia/Captura de pantalla 2025-08-03 160145.jpg",
+
+           "kenia/Captura de pantalla 2025-08-03 160444.jpg",
+           "kenia/Captura de pantalla 2025-08-03 164219.jpg",
+
+           "kenia/Captura de pantalla 2025-08-08 000553.jpg",
+           "kenia/Captura de pantalla 2025-08-08 001500.jpg",
+
+           "kenia/Captura de pantalla 2025-08-16 193604.jpg",
+           "kenia/Captura de pantalla 2025-08-17 205119.jpg",
+           
+           "kenia/Captura de pantalla 2025-08-17 205119.jpg",
+           "kenia/Captura de pantalla 2025-08-22 211050.jpg",
+
+           "kenia/fotopalfeisbuk.jpg",
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.28 AM.jpeg",
+
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.29 AM.jpeg",
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.30 AM.jpeg",
+
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.32 AM (1).jpeg",
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.34 AM (1).jpeg",
+           
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.35 AM (3).jpeg",
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.36 AM (2).jpeg",
+
+           "kenia/Captura de pantalla 2025-07-29 163137.jpg",
+           "kenia/Captura de pantalla 2025-08-01 101626.jpg",
+
+           "kenia/Captura de pantalla 2025-07-03 124107.jpg",
+           "kenia/Captura de pantalla 2025-08-08 150801.jpg",
+
+           "kenia/Captura de pantalla 2025-08-17 220724.jpg",
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.34 AM.jpeg",
+
+           "kenia/Captura de pantalla 2025-08-23 095114.jpg",
+           "kenia/Captura de pantalla 2025-08-17 205130.jpg",
+
+           "kenia/Captura de pantalla 2025-08-20 233153.jpg",
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.30 AM (1).jpeg",
+
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.31 AM.jpeg",
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.32 AM (2).jpeg",
+
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.36 AM (3).jpeg",
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.38 AM.jpeg",
+
+           "kenia/zzzzzzzzzzzzzzzzzzzzzzzzz.jpg",
+           "kenia/WhatsApp Image 2025-07-31 at 2.04.51 PM.jpeg",
+
+           "kenia/WhatsApp Image 2025-08-01 at 1.51.32 AM (2).jpeg",
+           "kenia/Imagen de WhatsApp 2025-06-15 a las 21.15.51_923078c2.jpg",
+
+           "kenia/Captura de pantalla 2025-06-14 210735.png",
+           "kenia/Captura de pantalla 2025-06-20 135848.png",
+           
+           "kenia/Captura de pantalla 2025-06-26 170716.jpg",
+           "kenia/Captura de pantalla 2025-06-20 135931.png",
+
+           "kenia/Captura de pantalla 2025-06-26 172141.jpg",
+           "kenia/Captura de pantalla 2025-06-26 192024.jpg",
+
+           "kenia/Captura de pantalla 2025-06-28 232202.jpg",
+           "kenia/Captura de pantalla 2025-07-03 124003.jpg",
+
+           "kenia/Captura de pantalla 2025-07-03 124107.jpg",
+           "kenia/Captura de pantalla 2025-07-03 130651.jpg",
+
+           "kenia/Captura de pantalla 2025-07-17 145057.jpg",
+           "kenia/Captura de pantalla 2025-07-16 224621.jpg",
+
+           "kenia/Captura de pantalla 2025-07-20 222617.jpg",
+           "kenia/Captura de pantalla 2025-07-28 192459.jpg",
+
+           "kenia/Captura de pantalla 2025-07-29 133309.jpg",
+           "kenia/Captura de pantalla 2025-07-29 132759.jpg",
+
+           "kenia/Imagen de WhatsApp 2025-06-14 a las 21.09.44_82ba96fc.jpg",
+           "kenia/Captura de pantalla 2025-08-27 222021.jpg",
+
+           "kenia/Captura de pantalla 2025-08-25 012115.jpg",
+           "kenia/Imagen de WhatsApp 2025-06-15 a las 21.20.11_20926c19.jpg",
+        ];
+
+        // Listas de mensajes
+        const correctMessages = [
+            "muy bien, sexo?",
+            "casate conmigo",
+            "jkshdksj muy biiiien",
+            "eso pandita",
+            "por eso eres mi novia amor",
+            "tengo suerte de tenerte",
+            "viva los furros",
+            "pa cuando el anillo",
+            "sexo x2?",
+            "eres la mejor mi amor ❤️"
+        ];
+
+        const incorrectMessages = [
+            "que nub aprendele",
+            "no le sabe",
+            "tus matematicas no matematiquean",
+            "mmmmmmmmm. diomio terminemos",
+            "que nub",
+            "luego pq te boy a pegar",
+            "no le sabeeee",
+            "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
+            "lo sabia no me amas",
+            "estudia más mi amor 😔"
+        ];
+
+        // Variables globales
+        let currentQuestionIndex = 0;
+        let userAnswers = [];
+
+        // Función para mostrar/ocultar elementos
+        function toggleElement(element, show) {
+            if (show) {
+                element.style.display = 'flex';
+                setTimeout(() => {
+                    element.style.opacity = '1';
+                    element.style.transform = 'translate(-50%, -50%) scale(1)';
+                }, 100);
+            } else {
+                element.style.opacity = '0';
+                element.style.transform = 'translate(-50%, -50%) scale(0)';
+                setTimeout(() => {
+                    element.style.display = 'none';
+                }, 800);
+            }
+        }
+
+        // Función para crear confeti
+        function createConfetti() {
+            const colors = ['#afd6b2', '#9bc79e', '#8abf8d', '#7ab77c'];
+            for (let i = 0; i < 100; i++) {
+                const confetti = document.createElement('div');
+                confetti.className = 'confetti';
+                confetti.style.left = Math.random() * 100 + 'vw';
+                confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+                confetti.style.width = Math.random() * 10 + 5 + 'px';
+                confetti.style.height = Math.random() * 10 + 5 + 'px';
+                confetti.style.animationDuration = Math.random() * 3 + 2 + 's';
+                document.body.appendChild(confetti);
+
+                setTimeout(() => {
+                    confetti.remove();
+                }, 5000);
+            }
+        }
+
+        // Función para lanzar un dado (1-10)
+        function rollDice() {
+            return Math.floor(Math.random() * 10);
+        }
+
+        // Función para cargar una pregunta
+        function loadQuestion(index) {
+            const question = questions[index];
+            const questionText = document.getElementById('question-text');
+            const questionOptions = document.getElementById('questionOptions');
+            const questionCounter = document.getElementById('questionCounter');
+            const feedbackElement = document.getElementById('question-feedback');
+            const prevBtn = document.getElementById('prevQuestionBtn');
+            const nextBtn = document.getElementById('nextQuestionBtn');
+            
+            // Actualizar contador
+            questionCounter.textContent = `Pregunta ${index + 1} de ${questions.length}`;
+            
+            // Cargar texto de la pregunta
+            questionText.textContent = question.question;
+            
+            // Limpiar opciones anteriores
+            questionOptions.innerHTML = '';
+            
+            // Crear botones de opciones
+            question.options.forEach((option, i) => {
+                const button = document.createElement('button');
+                button.className = 'question-btn';
+                button.textContent = option;
+                button.dataset.index = i;
+                
+                // Si ya hay una respuesta para esta pregunta, marcar la correcta y la del usuario
+                if (userAnswers[index] !== undefined) {
+                    if (i === question.correctAnswer) {
+                        button.classList.add('correct');
+                    } else if (i === userAnswers[index] && userAnswers[index] !== question.correctAnswer) {
+                        button.classList.add('incorrect');
+                    }
+                    button.disabled = true;
+                }
+                
+                button.addEventListener('click', () => answerQuestion(i));
+                questionOptions.appendChild(button);
+            });
+            
+            // Limpiar feedback
+            feedbackElement.textContent = '';
+            
+            // Actualizar estado de los botones de navegación
+            prevBtn.disabled = index === 0;
+            nextBtn.disabled = index === questions.length - 1;
+            
+            // Actualizar índice de pregunta actual
+            currentQuestionIndex = index;
+        }
+
+        // Función para cargar la galería de fotos
+        function loadGallery() {
+            const photoGallery = document.getElementById('photoGallery');
+            
+            // Limpiar galería anterior
+            photoGallery.innerHTML = '';
+            
+            // Crear elementos de imagen para cada imagen en el array
+            galleryImages.forEach(imageSrc => {
+                const galleryItem = document.createElement('div');
+                galleryItem.className = 'gallery-item';
+                
+                const img = document.createElement('img');
+                img.className = 'gallery-img';
+                img.src = imageSrc;
+                img.alt = "Nuestro recuerdo especial";
+                
+                galleryItem.appendChild(img);
+                photoGallery.appendChild(galleryItem);
+            });
+        }
+
+        // Función para responder una pregunta
+        function answerQuestion(answerIndex) {
+            const question = questions[currentQuestionIndex];
+            const isCorrect = answerIndex === question.correctAnswer;
+            const feedbackElement = document.getElementById('question-feedback');
+            
+            // Guardar respuesta del usuario
+            userAnswers[currentQuestionIndex] = answerIndex;
+            
+            // Deshabilitar todos los botones de opciones
+            const optionButtons = document.querySelectorAll('.question-btn');
+            optionButtons.forEach(btn => {
+                btn.disabled = true;
+                // Marcar la respuesta correcta
+                if (parseInt(btn.dataset.index) === question.correctAnswer) {
+                    btn.classList.add('correct');
+                }
+            });
+            
+            // Lanzar el dado para obtener un mensaje aleatorio
+            const diceResult = rollDice();
+            let message;
+            
+            if (isCorrect) {
+                message = correctMessages[diceResult];
+                feedbackElement.style.color = '#2e7d32';
+                createConfetti();
+            } else {
+                message = incorrectMessages[diceResult];
+                feedbackElement.style.color = '#c62828';
+            }
+            
+            // Mostrar mensaje con animación de dado
+            feedbackElement.innerHTML = `<span class="dice-animation">🎲</span> ${message}`;
+        }
+
+        // Función para inicializar el sistema de preguntas
+        function initQuestions() {
+            userAnswers = [];
+            currentQuestionIndex = 0;
+            loadQuestion(0);
+        }
+
+        // Abrir carta principal
+        document.getElementById('openBtn').addEventListener('click', function () {
+            document.querySelector('.envelope-container').classList.add('open');
+            document.getElementById('background').style.opacity = '1';
+            this.style.display = 'none';
+            document.getElementById('closeBtn').style.display = 'block';
+        });
+
+        // Cerrar carta principal
+        document.getElementById('closeBtn').addEventListener('click', function() {
+            document.querySelector('.envelope-container').classList.remove('open');
+            document.getElementById('background').style.opacity = '0';
+            this.style.display = 'none';
+
+            const loveMessage = document.getElementById('loveMessage');
+            loveMessage.style.display = 'block';
+            setTimeout(() => loveMessage.style.opacity = '1', 100);
+
+            createConfetti();
+
+            setTimeout(() => {
+                loveMessage.style.opacity = '0';
+                setTimeout(() => {
+                    loveMessage.style.display = 'none';
+                    document.getElementById('openBtn').style.display = 'block';
+                }, 1000);
+            }, 3000);
+        });
+
+        // Mostrar segunda carta (sorpresa)
+        document.getElementById('showSecondLetterBtn').addEventListener('click', function() {
+            toggleElement(document.getElementById('secondLetter'), true);
+            createConfetti();
+        });
+
+        // Cerrar segunda carta
+        document.getElementById('closeSecondLetter').addEventListener('click', function() {
+            toggleElement(document.getElementById('secondLetter'), false);
+        });
+
+        // Menú: Mostrar primera carta
+        document.getElementById('showFirstLetterBtn').addEventListener('click', function() {
+            toggleElement(document.getElementById('secondLetter'), false);
+            toggleElement(document.getElementById('thirdLetter'), false);
+            toggleElement(document.getElementById('questionsLetter'), false);
+            toggleElement(document.getElementById('galleryLetter'), false);
+
+            document.querySelector('.envelope-container').classList.add('open');
+            document.getElementById('background').style.opacity = '1';
+            document.getElementById('openBtn').style.display = 'none';
+            document.getElementById('closeBtn').style.display = 'block';
+        });
+
+        // Menú: Mostrar carta de metas
+        document.getElementById('showThirdLetterBtn').addEventListener('click', function() {
+            document.querySelector('.envelope-container').classList.remove('open');
+            document.getElementById('background').style.opacity = '0';
+            toggleElement(document.getElementById('secondLetter'), false);
+            toggleElement(document.getElementById('questionsLetter'), false);
+            toggleElement(document.getElementById('galleryLetter'), false);
+
+            toggleElement(document.getElementById('thirdLetter'), true);
+            document.getElementById('closeBtn').style.display = 'none';
+            createConfetti();
+        });
+
+        // Menú: Mostrar preguntas
+        document.getElementById('showQuestionsBtn').addEventListener('click', function() {
+            document.querySelector('.envelope-container').classList.remove('open');
+            document.getElementById('background').style.opacity = '0';
+            toggleElement(document.getElementById('secondLetter'), false);
+            toggleElement(document.getElementById('thirdLetter'), false);
+            toggleElement(document.getElementById('galleryLetter'), false);
+
+            toggleElement(document.getElementById('questionsLetter'), true);
+            document.getElementById('closeBtn').style.display = 'none';
+            createConfetti();
+            
+            // Inicializar preguntas
+            initQuestions();
+        });
+
+        // Menú: Mostrar galería
+        document.getElementById('showGalleryBtn').addEventListener('click', function() {
+            document.querySelector('.envelope-container').classList.remove('open');
+            document.getElementById('background').style.opacity = '0';
+            toggleElement(document.getElementById('secondLetter'), false);
+            toggleElement(document.getElementById('thirdLetter'), false);
+            toggleElement(document.getElementById('questionsLetter'), false);
+
+            toggleElement(document.getElementById('galleryLetter'), true);
+            document.getElementById('closeBtn').style.display = 'none';
+            createConfetti();
+            
+            // Cargar galería
+            loadGallery();
+        });
+
+        // Cerrar tercera carta
+        document.getElementById('closeThirdLetter').addEventListener('click', function() {
+            toggleElement(document.getElementById('thirdLetter'), false);
+        });
+
+        // Cerrar carta de preguntas
+        document.getElementById('closeQuestionsLetter').addEventListener('click', function() {
+            toggleElement(document.getElementById('questionsLetter'), false);
+        });
+
+        // Cerrar carta de galería
+        document.getElementById('closeGalleryLetter').addEventListener('click', function() {
+            toggleElement(document.getElementById('galleryLetter'), false);
+        });
+
+        // Navegación entre preguntas
+        document.getElementById('prevQuestionBtn').addEventListener('click', function() {
+            if (currentQuestionIndex > 0) {
+                loadQuestion(currentQuestionIndex - 1);
+            }
+        });
+
+        document.getElementById('nextQuestionBtn').addEventListener('click', function() {
+            if (currentQuestionIndex < questions.length - 1) {
+                loadQuestion(currentQuestionIndex + 1);
+            }
+        });
+
+        // Efecto de confeti al cargar la página
+        window.addEventListener('load', function() {
+            setTimeout(createConfetti, 1000);
+        });
+
+        // =============================================
+        // Código para el efecto Matrix con explosión de "te amo"
+        // =============================================
+        (function() {
+            const matrixText = "I love you";
+            const explosionText = "te amo";
+            const neonColor = "#0000FF"; // azul
+
+            const matrixCanvas = document.getElementById('matrixCanvas');
+            const explosionCanvas = document.getElementById('explosionCanvas');
+            const matrixCtx = matrixCanvas.getContext('2d');
+            const explosionCtx = explosionCanvas.getContext('2d');
+            const matrixEffect = document.getElementById('matrixEffect');
+            const closeMatrixBtn = document.getElementById('closeMatrixBtn');
+
+            let width, height;
+            function resize() {
+                width = window.innerWidth;
+                height = window.innerHeight;
+                matrixCanvas.width = width;
+                matrixCanvas.height = height;
+                explosionCanvas.width = width;
+                explosionCanvas.height = height;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            const fontSize = 24;
+            matrixCtx.font = fontSize + "px monospace";
+
+            const textWidth = matrixCtx.measureText(matrixText).width;
+            const columns = Math.floor(width / textWidth);
+
+            // Variables para animación
+            let animationPhase = "initial"; // 'initial' = lluvia sincronizada, luego 'pause', luego 'random'
+            let initialDropPosition = 0; // posición vertical común para la lluvia inicial sincronizada
+            const drops = [];
+
+            // Inicializamos drops para lluvia aleatoria (fase 'random')
+            for(let i = 0; i < columns; i++) {
+                drops[i] = Math.floor(Math.random() * height / fontSize);
+            }
+
+            // Tiempo de espera (en ms) tras bajada sincronizada
+            const pauseDuration = 2000;
+            let pauseStartTime = null;
+
+            function drawMatrix() {
+                // Fondo negro semi-transparente para efecto estela
+                matrixCtx.fillStyle = "rgba(0, 0, 0, 0.1)";
+                matrixCtx.fillRect(0, 0, width, height);
+
+                matrixCtx.fillStyle = neonColor;
+                matrixCtx.font = fontSize + "px monospace";
+
+                if(animationPhase === "initial") {
+                    for(let i = 0; i < columns; i++) {
+                        const x = i * textWidth;
+                        const y = initialDropPosition * fontSize;
+                        matrixCtx.fillText(matrixText, x, y);
+                    }
+                    initialDropPosition++;
+                    if(initialDropPosition * fontSize > height + fontSize) {
+                        animationPhase = "pause";
+                        pauseStartTime = performance.now();
+                    }
+                }
+                else if(animationPhase === "pause") {
+                    // Mantener la lluvia completa bajada estática (toda en la misma fila final)
+                    for(let i = 0; i < columns; i++) {
+                        const x = i * textWidth;
+                        const y = initialDropPosition * fontSize;
+                        matrixCtx.fillText(matrixText, x, y);
+                    }
+                    // Esperar pauseDuration ms antes de cambiar a random
+                    const elapsed = performance.now() - pauseStartTime;
+                    if(elapsed >= pauseDuration) {
+                        animationPhase = "random";
+                    }
+                }
+                else if(animationPhase === "random") {
+                    // Caída aleatoria estilo Matrix
+                    for(let i = 0; i < columns; i++) {
+                        const x = i * textWidth;
+                        const y = drops[i] * fontSize;
+                        matrixCtx.fillText(matrixText, x, y);
+                        drops[i]++;
+                        if(drops[i] * fontSize > height + fontSize) {
+                            drops[i] = 0;
+                        }
+                    }
+                }
+            }
+            // Partículas que muestran texto "te amo"
+            class TextParticle {
+                constructor(x, y) {
+                    this.x = x;
+                    this.y = y;
+                    this.size = 12 + Math.random() * 8; // Tamaño variable
+                    this.life = 80 + Math.random() * 40; // Duración variable
+                    this.vx = (Math.random() - 0.5) * 8; // Velocidad horizontal
+                    this.vy = (Math.random() - 0.7) * 6; // Velocidad vertical
+                    this.alpha = 1;
+                    this.rotation = (Math.random() - 0.5) * 0.4;
+                    this.rotationSpeed = (Math.random() - 0.5) * 0.02;
+                }
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+                    this.vy += 0.1; // Gravedad
+                    this.life--;
+                    this.alpha = this.life / 120;
+                    this.rotation += this.rotationSpeed;
+                }
+                draw(ctx) {
+                    ctx.save();
+                    ctx.translate(this.x, this.y);
+                    ctx.rotate(this.rotation);
+                    ctx.globalAlpha = this.alpha;
+                    ctx.fillStyle = neonColor;
+                    ctx.font = `${this.size}px Arial`;
+                    ctx.textAlign = "center";
+                    ctx.textBaseline = "middle";
+                    ctx.fillText(explosionText, 0, 0);
+                    ctx.restore();
+                }
+            }
+
+            let particles = [];
+
+            function explodeParticles(x, y) {
+                const count = 30 + Math.floor(Math.random() * 20); // Más partículas
+                for(let i = 0; i < count; i++) {
+                    particles.push(new TextParticle(x, y));
+                }
+            }
+
+            function animate() {
+                if(matrixEffect.style.display === 'block') {
+                    drawMatrix();
+
+                    explosionCtx.clearRect(0, 0, width, height);
+
+                    for(let i = particles.length -1; i >= 0; i--) {
+                        const p = particles[i];
+                        p.update();
+                        if(p.life <= 0 || p.alpha <= 0) {
+                            particles.splice(i, 1);
+                        } else {
+                            p.draw(explosionCtx);
+                        }
+                    }
+                }
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+
+            // Mostrar efecto Matrix al hacer clic en el botón
+            document.getElementById('heartsBtn').addEventListener('click', function() {
+                matrixEffect.style.display = 'block';
+                animationPhase = "initial";
+                initialDropPosition = 0;
+                particles = []; // Limpiar partículas anteriores
+            });
+
+            // Cerrar efecto Matrix
+            closeMatrixBtn.addEventListener('click', function() {
+                matrixEffect.style.display = 'none';
+                particles = []; // Limpiar partículas
+            });
+
+            // Explosión al hacer clic en cualquier parte
+            matrixEffect.addEventListener('click', function(e) {
+                explodeParticles(e.clientX, e.clientY);
+            });
+        })();
+    </script>
+</body>
+</html>
