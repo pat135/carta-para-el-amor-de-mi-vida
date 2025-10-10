@@ -5,14 +5,78 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Carta Romántica para Kenia</title>
     <style>
-        /* Estilos del menú circular */
+        /* Estilos generales */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f9f3f3;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Fondos */
+        .romantic-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("kenia/Captura de pantalla 2025-07-26 203321.jpg") no-repeat center center;
+            background-size: cover;
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: -1;
+            filter: brightness(0.8) blur(1px);
+        }
+
+        .additional-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url("kenia/Captura de pantalla 2025-08-23 082404.jpg") no-repeat center center;
+            background-size: cover;
+            opacity: 0.2;
+            z-index: -2;
+        }
+
+        /* Imagen de corazones */
+        .hearts-intro {
+            position: fixed;
+            top: 5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 150px;
+            height: 150px;
+            background: url("kenia/Diseño sin título (1).png") no-repeat center center;
+            background-size: contain;
+            z-index: 10;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateX(-50%) translateY(0); }
+            50% { transform: translateX(-50%) translateY(-15px); }
+        }
+
+        /* Menú circular */
         .menu-wheel {
             position: fixed;
             left: 20px;
             top: 50%;
             transform: translateY(-50%);
             width: 100px;
-            height: 300px;
+            height: 400px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -44,64 +108,37 @@
             background-color: #9bbdc7;
         }
 
-        /* Imagen de corazones */
-        .hearts-intro {
+        /* Botón corazones */
+        .hearts-btn {
             position: fixed;
-            top: 20px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 250px;
-            height: 250px;
-            background: url("kenia/Diseño sin título (1).png") no-repeat center center;
-            background-size: contain;
-            z-index: 10;
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(-15px); }
-        }
-
-        /* Fondo romántico adicional */
-        .additional-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url("kenia/Captura de pantalla 2025-08-23 082404.jpg") no-repeat center center;
-            background-size: cover;
-            opacity: 0.2;
-            z-index: -2;
-        }
-
-        body {
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #afd6d6;
+            color: #333;
+            border: none;
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 14px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s;
             display: flex;
-            justify-content: center;
             align-items: center;
-            height: 100vh;
-            margin: 0;
-            font-family: 'Arial', sans-serif;
-            overflow: hidden;
-            position: relative;
-            background-color: #f9f3f3;
+            justify-content: center;
+            text-align: center;
+            padding: 10px;
+            z-index: 10;
         }
 
-        .romantic-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: url("kenia/Captura de pantalla 2025-07-26 203321.jpg") no-repeat center center;
-            background-size: cover;
-            opacity: 0;
-            transition: opacity 1s ease;
-            z-index: -1;
-            filter: brightness(0.8) blur(1px);
+        .hearts-btn:hover {
+            transform: translateY(-50%) scale(1.1);
+            background-color: #9bc7bc;
         }
 
+        /* Sobre y carta principal */
         .envelope-container {
             position: relative;
             width: 320px;
@@ -152,7 +189,7 @@
 
         .letter {
             position: absolute;
-            background-color: rgba(175, 208, 214, 0.9);
+            background-color: rgba(175, 208, 214, 0.95);
             width: 280px;
             height: 480px;
             padding: 20px;
@@ -171,159 +208,23 @@
             backdrop-filter: blur(2px);
         }
 
-        .close-btn {
-            position: fixed;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            background-color: #afd6d4;
-            color: #333;
-            border: none;
-            padding: 10px 25px;
-            border-radius: 20px;
-            font-weight: bold;
-            cursor: pointer;
-            z-index: 4;
-            display: none;
-            font-size: 18px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
-        }
-
-        .love-message {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            font-size: 72px;
-            color: white;
-            font-weight: bold;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            opacity: 0;
-            transition: opacity 1s ease;
-            z-index: 5;
-            display: none;
-        }
-
-        /* Segunda carta (cosas que amo) */
-        .second-letter {
-            position: absolute;
-            background-color: rgba(175, 214, 214, 0.9);
-            width: 280px;
-            height: 480px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            transform-origin: center;
-            opacity: 0;
-            transition: all 0.8s ease;
-            z-index: 6;
-            line-height: 1.6;
-            border-radius: 5px;
-            text-align: center;
-            backdrop-filter: blur(2px);
-            display: none;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        /* Tercera carta (metas) */
-        .third-letter {
-            position: absolute;
-            background-color: rgba(175, 205, 214, 0.9);
-            width: 280px;
-            height: 480px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            transform-origin: center;
-            opacity: 0;
-            transition: all 0.8s ease;
-            z-index: 7;
-            line-height: 1.6;
-            border-radius: 5px;
-            text-align: center;
-            backdrop-filter: blur(2px);
-            display: none;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        /* Cuarta carta (preguntas) */
-        .questions-letter {
-            position: absolute;
-            background-color: rgba(214, 175, 205, 0.9);
-            width: 280px;
-            height: 480px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            transform-origin: center;
-            opacity: 0;
-            transition: all 0.8s ease;
-            z-index: 8;
-            line-height: 1.6;
-            border-radius: 5px;
-            text-align: center;
-            backdrop-filter: blur(2px);
-            display: none;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        /* Quinta carta (Galería de fotos) */
-        .gallery-letter {
-            position: absolute;
-            background-color: rgba(205, 214, 175, 0.9);
-            width: 300px;
-            height: 500px;
-            padding: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%) scale(0);
-            transform-origin: center;
-            opacity: 0;
-            transition: all 0.8s ease;
-            z-index: 9;
-            line-height: 1.6;
-            border-radius: 5px;
-            text-align: center;
-            backdrop-filter: blur(2px);
-            display: none;
-            flex-direction: column;
-            overflow-y: auto;
-        }
-
-        .second-letter h2, .third-letter h2, .questions-letter h2, .gallery-letter h2 {
-            font-size: 36px;
-            color: #333;
+        .letter-content {
+            text-align: left;
             margin-bottom: 20px;
         }
 
-        .open .closed-envelope {
-            transform: translateY(-50px);
-            opacity: 0;
+        .letter-content p {
+            margin-bottom: 10px;
         }
 
-        .open .closed-envelope:before {
-            transform: rotateX(180deg);
-            opacity: 0;
-        }
-
-        .open .letter {
-            transform: translate(-50%, -50%) scale(1);
-            opacity: 1;
-            z-index: 3;
-        }
-
-        .open .romantic-bg {
-            opacity: 1;
+        .love-image {
+            width: 200px;
+            height: 150px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 15px auto;
+            border: 3px solid #afcbd6;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .heart {
@@ -345,22 +246,25 @@
             text-align: right;
         }
 
-        h2 {
+        /* Botones generales */
+        .close-btn {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #afd6d4;
             color: #333;
-            margin-bottom: 15px;
+            border: none;
+            padding: 10px 25px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            z-index: 4;
+            display: none;
+            font-size: 18px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
         }
 
-        .love-image {
-            width: 200px;
-            height: 150px;
-            object-fit: cover;
-            border-radius: 10px;
-            margin: 15px auto;
-            border: 3px solid #afcbd6;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Botón sorpresa */
         .surprise-btn {
             background-color: #afcdd6;
             color: #333;
@@ -373,7 +277,107 @@
             display: block;
         }
 
-        /* Opciones de preguntas */
+        /* Mensaje de amor */
+        .love-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 72px;
+            color: white;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+            opacity: 0;
+            transition: opacity 1s ease;
+            z-index: 5;
+            display: none;
+        }
+
+        /* Cartas secundarias */
+        .second-letter, .third-letter, .questions-letter, .gallery-letter, .story-letter {
+            position: absolute;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            transform-origin: center;
+            opacity: 0;
+            transition: all 0.8s ease;
+            line-height: 1.6;
+            border-radius: 5px;
+            text-align: center;
+            backdrop-filter: blur(2px);
+            display: none;
+            flex-direction: column;
+            overflow-y: auto;
+            z-index: 6;
+        }
+
+        .second-letter {
+            background-color: rgba(175, 214, 214, 0.95);
+            width: 280px;
+            height: 480px;
+        }
+
+        .third-letter {
+            background-color: rgba(175, 205, 214, 0.95);
+            width: 280px;
+            height: 480px;
+        }
+
+        .questions-letter {
+            background-color: rgba(214, 175, 205, 0.95);
+            width: 280px;
+            height: 480px;
+        }
+
+        .gallery-letter {
+            background-color: rgba(205, 214, 175, 0.95);
+            width: 300px;
+            height: 500px;
+        }
+
+        .story-letter {
+            background-color: rgba(214, 205, 175, 0.95);
+            width: 700px;
+            height: 700px;
+        }
+
+        .second-letter h2, .third-letter h2, .questions-letter h2, .gallery-letter h2, .story-letter h2 {
+            font-size: 36px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        /* Estados abierto/cerrado */
+        .open .closed-envelope {
+            transform: translateY(-50px);
+            opacity: 0;
+        }
+
+        .open .closed-envelope:before {
+            transform: rotateX(180deg);
+            opacity: 0;
+        }
+
+        .open .letter {
+            transform: translate(-50%, -50%) scale(1);
+            opacity: 1;
+            z-index: 3;
+        }
+
+        .open .romantic-bg {
+            opacity: 1;
+        }
+
+        /* Preguntas */
+        .question-counter {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
         .question-options {
             display: flex;
             flex-direction: column;
@@ -404,7 +408,6 @@
             background-color: #d6afaf;
         }
 
-        /* Navegación de preguntas */
         .question-nav {
             display: flex;
             justify-content: space-between;
@@ -426,7 +429,7 @@
             cursor: not-allowed;
         }
 
-        /* Galería de fotos */
+        /* Galería */
         .photo-gallery {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -453,7 +456,32 @@
             transform: scale(1.05);
         }
 
-        /* Efectos de confeti */
+        /* Estilos para el cuento */
+        .story-content {
+            text-align: left;
+            margin-bottom: 20px;
+            font-size: 16px;
+            padding: 10px;
+        }
+
+        .story-content p {
+            margin-bottom: 15px;
+            line-height: 1.8;
+        }
+
+        .story-image {
+            width: 100%;
+            max-width: 400px;
+            height: 250px;
+            object-fit: cover;
+            border-radius: 10px;
+            margin: 15px auto;
+            border: 3px solid #afcbd6;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            display: block;
+        }
+
+        /* Confeti */
         .confetti {
             position: fixed;
             width: 10px;
@@ -475,37 +503,7 @@
             }
         }
 
-        /* Botón para activar corazones flotantes */
-        .hearts-btn {
-            position: fixed;
-            right: 20px;
-            top: 50%;
-            transform: translateY(-50%);
-            background-color: #afd6d6;
-            color: #333;
-            border: none;
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 14px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-            transition: all 0.3s;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            padding: 10px;
-            z-index: 10;
-        }
-
-        .hearts-btn:hover {
-            transform: translateY(-50%) scale(1.1);
-            background-color: #9bc7bc;
-        }
-
-        /* Estilos para la lluvia Matrix */
+        /* Efecto Matrix */
         .matrix-effect {
             position: fixed;
             top: 0;
@@ -539,7 +537,7 @@
             box-shadow: 0 2px 5px rgba(0,0,0,0.3);
         }
 
-        /* Animación de dado */
+        /* Animaciones */
         .dice-animation {
             display: inline-block;
             animation: diceRoll 0.5s ease-in-out;
@@ -551,11 +549,47 @@
             100% { transform: rotate(360deg) scale(1); opacity: 1; }
         }
 
-        /* Contador de preguntas */
-        .question-counter {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
+        /* Responsive */
+        @media (max-width: 768px) {
+            .menu-wheel, .hearts-btn {
+                display: none;
+            }
+            
+            .envelope-container {
+                width: 280px;
+                height: 200px;
+            }
+            
+            .letter, .second-letter, .third-letter, .questions-letter, .gallery-letter {
+                width: 260px;
+                height: 440px;
+            }
+            
+            .gallery-letter {
+                width: 280px;
+                height: 460px;
+            }
+            
+            .story-letter {
+                width: 90vw;
+                height: 80vh;
+                max-width: 600px;
+                max-height: 600px;
+            }
+            
+            .love-message {
+                font-size: 48px;
+            }
+            
+            .story-content {
+                font-size: 14px;
+                padding: 5px;
+            }
+            
+            .story-image {
+                max-width: 300px;
+                height: 180px;
+            }
         }
     </style>
 </head>
@@ -573,6 +607,7 @@
         <button class="menu-btn" id="showThirdLetterBtn">Metas</button>
         <button class="menu-btn" id="showQuestionsBtn">Preguntas</button>
         <button class="menu-btn" id="showGalleryBtn">Galería</button>
+        <button class="menu-btn" id="showStoryBtn">Cuento</button>
     </div>
 
     <!-- Botón para activar efecto Matrix -->
@@ -587,76 +622,79 @@
     <!-- Segunda carta (cosas que amo) -->
     <div class="second-letter" id="secondLetter">
         <h2>Cosas que me gustan de ti</h2>
-        <p>1- que te guste el color azul,</p>
-        <p>2- tu pechito hermoso</p>
-        <p>3- Tus ojos hermosos</p>
-        <p>4- Tu boquita después de una paleta</p>
-        <p>5- Tu cuerpo lindo</p>
-        <p>6- Tu forma de hablar conmigo</p>
-        <p>7- Tu carita linda</p>
-        <p>8- que siempre que te digo que eres hermosa lo niegas aunque sea verdad</p>
-        <p>9- Tu forma de ser</p>
-        <p>10- Que eres mi novia</p>
-        <p>11- verte cocinando</p>
-        <p>12- Que me haces reír</p>
-        <p>13- Que me haces feliz</p>
-        <p>14- Que me haces sentir especial</p>
-        <p>15- Que me haces sentir amado</p>
-        <p>16- Que me haces sentir que soy tuyo</p>
-        <p>17- Que cuando sera el dia que hagamos llamada por horas</p>
-        <p>18- que tengas un cuerpo hermosooooooooooooooooooooooooooooooooooooooooooooooo con esa panshita hermosaaaaaaaaaa</p>
-        <p>19- que hagas voz dde niña amor amo eso enserioooooo</p>
-        <p>20- sobre todo que seas tu quien me ame y no me deje ir jamas y que hace que me sienta seguroooo</p>
-        <P>21- AMO que intentemos arreglar las cosas antes de mimir </P>
-        <p>22- AMO verte dormir, es lo mas bonito del mundo</p>
-        <p>23- amo cuando te enojas,</p>
-        <p>24- que escuchamos musica juntos</p>
-        <p>25- que aunque sea tu novio lindo, me regañes ayyyyyyyyyyyyy que bonito amor amor am0or amor amor tratame asiiii</p>
-        <P> yo el menos sumiso sdksjdkasjkdkdjaskdjkdjaskjdakjadk tratame asi y me quedo aunque me seas infiel</P>
-        <p>26- que me digas bonito, nunca me dicen cosas asi es muy bonito que me veas con esos ojos, oajala nunca los habras y veas lo feo que toy</p>
-        <p>27- que juguemos aunque digas que no te gusta</p>
-        <p>28- que te enojes ya dije??? ajdkjdkjasdksadkd</p>
-        <p>29- que me esperes que me tengas la paciensia que me tienes y no dejarme por algo minimo</p>
-        <p>30- que me ames tanto como yo a ti</p>
-        <p>31- que me hagas sentir que soy el hombre mas feliz del mundo, aunque ya lo haya dicho te lo tengo que recordar</p>
-        <p>32- que me hagas sentir que soy el hombre mas afortunado del mundo</p>
-        <p>33- que me hagas sentir que soy el hombre mas amado del mundo</p>
-        <p>34- que me hagas sentir que soy el hombre mas especial del mundo</p>
-        <p>35- que me hagas sentir que soy el hombre mas querido del mundo</p>
-        <p>36- que me hagas sentir que soy el hombre mas deseado del mundo</p>
-        <p>37- que me hagas sentir que soy el hombre mas importante del mundo</p>
-        <p>38- que me hagas sentir que soy el hombre mas valorado del mundo</p>
-        <p>39- que me hagas sentir que soy el hombre mas respetado del mundo</p>
-        <p>40- que me hagas sentir que soy el hombre mas bonito del mundo</p>
-        <p> coming soon...</p>
+        <div class="letter-content">
+            <p>1- que te guste el color azul,</p>
+            <p>2- tu pechito hermoso</p>
+            <p>3- Tus ojos hermosos</p>
+            <p>4- Tu boquita después de una paleta</p>
+            <p>5- Tu cuerpo lindo</p>
+            <p>6- Tu forma de hablar conmigo</p>
+            <p>7- Tu carita linda</p>
+            <p>8- que siempre que te digo que eres hermosa lo niegas aunque sea verdad</p>
+            <p>9- Tu forma de ser</p>
+            <p>10- Que eres mi novia</p>
+            <p>11- verte cocinando</p>
+            <p>12- Que me haces reír</p>
+            <p>13- Que me haces feliz</p>
+            <p>14- Que me haces sentir especial</p>
+            <p>15- Que me haces sentir amado</p>
+            <p>16- Que me haces sentir que soy tuyo</p>
+            <p>17- Que cuando sera el dia que hagamos llamada por horas</p>
+            <p>18- que tengas un cuerpo hermosooooooooooooooooooooooooooooooooooooooooooooooo con esa panshita hermosaaaaaaaaaa</p>
+            <p>19- que hagas voz dde niña amor amo eso enserioooooo</p>
+            <p>20- sobre todo que seas tu quien me ame y no me deje ir jamas y que hace que me sienta seguroooo</p>
+            <P>21- AMO que intentemos arreglar las cosas antes de mimir </P>
+            <p>22- AMO verte dormir, es lo mas bonito del mundo</p>
+            <p>23- amo cuando te enojas,</p>
+            <p>24- que escuchamos musica juntos</p>
+            <p>25- que aunque sea tu novio lindo, me regañes ayyyyyyyyyyyyy que bonito amor amor am0or amor amor tratame asiiii</p>
+            <P> yo el menos sumiso sdksjdkasjkdkdjaskdjkdjaskjdakjadk tratame asi y me quedo aunque me seas infiel</P>
+            <p>26- que me digas bonito, nunca me dicen cosas asi es muy bonito que me veas con esos ojos, oajala nunca los habras y veas lo feo que toy</p>
+            <p>27- que juguemos aunque digas que no te gusta</p>
+            <p>28- que te enojes ya dije??? ajdkjdkjasdksadkd</p>
+            <p>29- que me esperes que me tengas la paciensia que me tienes y no dejarme por algo minimo</p>
+            <p>30- que me ames tanto como yo a ti</p>
+            <p>31- que me hagas sentir que soy el hombre mas feliz del mundo, aunque ya lo haya dicho te lo tengo que recordar</p>
+            <p>32- que me hagas sentir que soy el hombre mas afortunado del mundo</p>
+            <p>33- que me hagas sentir que soy el hombre mas amado del mundo</p>
+            <p>34- que me hagas sentir que soy el hombre mas especial del mundo</p>
+            <p>35- que me hagas sentir que soy el hombre mas querido del mundo</p>
+            <p>36- que me hagas sentir que soy el hombre mas deseado del mundo</p>
+            <p>37- que me hagas sentir que soy el hombre mas importante del mundo</p>
+            <p>38- que me hagas sentir que soy el hombre mas valorado del mundo</p>
+            <p>39- que me hagas sentir que soy el hombre mas respetado del mundo</p>
+            <p>40- que me hagas sentir que soy el hombre mas bonito del mundo</p>
+            <p> coming soon...</p>
+        </div>
         <button class="surprise-btn" id="closeSecondLetter">Cerrar</button>
     </div>
 
     <!-- Tercera carta (metas) -->
     <div class="third-letter" id="thirdLetter">
         <h2>NUESTRAS METAS</h2>
-        <p>Cosas que queremos lograr juntos:</p>
-        <p>1- Conocernos en persona</p>
-        <p>2- Viajar juntos a lugares increíbles</p>
-        <p>3- Crecer juntos como pareja</p>
-        <p>4- Apoyarnos en nuestros sueños</p>
-        <p>5- Construir un futuro lleno de amor</p>
-        <p>6- Pasar muchas noches hablando hasta tarde</p>
-        <p>7- Crear miles de recuerdos juntos</p>
-        <p>8- Superar cualquier obstáculo que se presente</p>
-        <p>9- Ser felices el uno con el otro</p>
-        <p>10- Amarnos cada día más</p>
-        <p>11- Formar una familia llena de amor y alegría</p>
-        <p>12- Apoyarnos mutuamente en nuestras metas personales</p>
-        <p>13- Celebrar cada aniversario con momentos especial</p>
-        <p>14- Aprender y crecer juntos en todos los aspectos de la vida</p>
-        <p>15- Ser el mejor equipo en todo lo que hagamos</p>
-        <p>16- Hacer que c ada día cuentey vivir siempre con la misma intensidad</p>
-        <p>17- Mantener viva la chispa del amor con sorpresas y detalles</p>
-        <p>18- Envejecer juntos y seguir amándonos como el primer día</p>
-        <p>19- Apoyarnos en los momentos difíciles y celebrar los buenos</p>
-        <p>20- Ser siempre honestos y comunicativos el uno con el otro</p>
-        <p> coming soon...</p>
+        <div class="letter-content">
+            <p>Cosas que queremos lograr juntos:</p>
+            <p>1- Conocernos en persona</p>
+            <p>2- Viajar juntos a lugares increíbles</p>
+            <p>3- Crecer juntos como pareja</p>
+            <p>4- Apoyarnos en nuestros sueños</p>
+            <p>5- Construir un futuro lleno de amor</p>
+            <p>6- Pasar muchas noches hablando hasta tarde</p>
+            <p>7- Crear miles de recuerdos juntos</p>
+            <p>8- Superar cualquier obstáculo que se presente</p>
+            <p>9- Ser felices el uno con el otro</p>
+            <p>10- Amarnos cada día más</p>
+            <p>11- Formar una familia llena de amor y alegría</p>
+            <p>12- Apoyarnos mutuamente en nuestras metas personales</p>
+            <p>13- Celebrar cada aniversario con momentos especial</p>
+            <p>14- Aprender y crecer juntos en todos los aspectos de la vida</p>
+            <p>15- Ser el mejor equipo en todo lo que hagamos</p>
+            <p>16- Hacer que c ada día cuentey vivir siempre con la misma intensidad</p>
+            <p>17- Mantener viva la chispa del amor con sorpresas y detalles</p>
+            <p>18- Envejecer juntos y seguir amándonos como el primer día</p>
+            <p>19- Apoyarnos en los momentos difíciles y celebrar los buenos</p>
+            <p>20- Ser siempre honestos y comunicativos el uno con el otro</p>
+        </div>
         <button class="surprise-btn" id="closeThirdLetter">Cerrar</button>
     </div>
 
@@ -690,6 +728,15 @@
         <button class="surprise-btn" id="closeGalleryLetter">Cerrar</button>
     </div>
 
+    <!-- Sexta carta (Cuento) -->
+    <div class="story-letter" id="storyLetter">
+        <h2>Nuestro Cuento</h2>
+        <div class="story-content" id="storyContent">
+            <!-- El contenido del cuento se generará dinámicamente -->
+        </div>
+        <button class="surprise-btn" id="closeStoryLetter">Cerrar</button>
+    </div>
+
     <!-- Botón Cerrar (fuera de la carta) -->
     <button class="close-btn" id="closeBtn">Cerrar</button>
 
@@ -702,35 +749,41 @@
 
             <img src="kenia/Captura de pantalla 2025-06-26 192010.jpg" alt="Pareja feliz" class="love-image">
 
-            <p>Te amo demasiado, eres mi niña, mi vida, mi amor jsjsjsjsjs</p>
-            <p>Un día nos veremos y nos daremos todo lo que siempre hemos soñado</p>
-            <p>Esto lo hice para nuestro primer mes, aunque no sabía si terminaría antes del 10 jsjsjjsjs</p>
-            <p>Mi amor es muy sincero y quiero que sepas que siempre estaré para ti</p>
-            <p>Siempre, siempre me tendrás detrás tuyo jsjsjsjjssjjs te amo te amo</p>
-            <p>Eres mi novia, mi niña, mi preciosa, mi esposa.</p>
-            <p>Repito, siempre estaré para ti, te amo demasiado</p>
-            <p>Te voy a hacer lo mismo que le hago al capibara</p>
-            <p>Me sentí muy feliz el día que nos quedamos hasta tarde hablando</p>
-            <p>Ese día conociste a Pingu, es mi versión más rara que pudiste conocer</p>
-            <p>Y aun así no se te hizo raro, eso me impresionó y me dio la confianza</p>
-            <p>Para hacer todo esto, de verdad te amo mi niña hermosa</p>
-            <p> 5 MES YAAAAAAAAAAAA ABAJO DE AKI</p>
-            <p>ya van 5 meses de querernos tanto llenos de amor y mucha locuras a lo gey ksjdkjdksjikdjksd, se que esta carata ya la habia hecho pero solo recupere una parte asi que se empezo casi que a la mitad</p>
-            <p>perdoname si no es lo que esperabas, puede que este mes como era el 5 pensarias que te daria algo mejor amor pero yo siempre que veo la carta o me acordaba de ella queria mejorarla pero ya habia perdido el codigo ahora lo rercupere y lo medio mejore dskadjaksjsdkdjas</p>
-            <p>esto no es mucho amor lo se, es lo que mas me gusta para la persona que en un principio me gusto y futuramente sera mi esposa dskjdksjdksj, yo no me esperaba esto mucho menos de una noche de platicar kdjskdj es algo new </p>
-            <p>no puedo creer aun que de un lugar tan raro como rublox salio el amor de mi vida, enserio yo en un inicio pense que solo querias jugar conmigo o pasar el rato, luego vi que no, me dio miedo pq no se no soy mucho de eso</p>
-            <P>asi que una relacion asi es new pa mi amor perdoname si exagero o hago las cosas mal amor no es mi intencion hacerte mal MENOS HACERTE DAÑO PORQUE ERES LA NIÑA DE MI CORAZON MI TRALALERITA</P>
-            <p>si hiciera algo muy malo osea hacerte daño no me lo perdonaria ami mismo por dañar al amor de my vida, dejando lo tite de lado espero que sigamos asi por años hasta que nos muramos o decidas cambiarme por julian pq vive mas cerca ;( pero bno njdksjdkjsdkds</p>
-            <p>amor muchas gracias por estos 5 meses para mi han sido los mejores 5 meses de my vida entera "que bonito suenas amor 23:15 asio espero suenes en diciembre jdskjdks" ay amoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooor te amo</p>
-            <P>te amo demaciado amor enserio eres mi princesa hermosa divina, la reina de my mundo, felices 5 meses amooooooooooooooooooor te amoooooo sdjksdjskdjisjdk encuerate</P>
-            <p>//6 meses aki mensota tontota</p>
-            <p>si ami me huvieran dicho que tu serias mi nobia en un futuro yo no me la creeria eres la niña mas hermosa en este mundo solo tengo ojitos para ti para nadie mas, sin importar lo linda que creas que ellas puedan ser tu eres 10000 veces mas linda que ellas ante mis ojos, poruqe tu eres quien me trata bonito me hace cariñitos me ahce sentir escuchado me hace sentir amado y me hace sentir feliz and es lo que mas valoro</p>
-            <p>muchas gracias por dejarme estar a tu lado durante 6 meses repito cada mes, que es el mejor lo se lo se pero es que es la truth contigo hago cosas con quien nadie mas haria, con nadie pase mas de 4 horas en llamada pq me aburria, contigo no me aburro cada rato tengo algo que decir o pensar nunca me dejas solo siempre estas para mi AMO AMOR se que esta carta solo le hago cosas minimas pero es tardado moverle al codigo y saber donde mover sin destruir todo y mas con que apenas boy aprendiendo espero y valores lo que estoy haciendo aque pueda tener errores, perdoname por ser un mal novio amor no un mal novio no lo soy pero si una mala compañia que no te deja estar con amigos, perdoname estoy intentado quitar eso de mi pero no se cada que hablas con otro mi cerebro ya penso 100000000000000000000000000000000  maneras en ñas que me podrias engañar sin que me de cuenta</p>
-            <p>estos 6 meses e tenido nuevas experiencias contigo, cosas que jamas pense hacer con alguien o que sinceramente ni conocia pero me hace feliz hacerlo contigo podria hacer cualquier cosa contigo, caminar por la calle un dia lluvioso, caminar en fundidora viendo a los patos, caminar por mi casa platicandote todo lo que quisiera hacer contigo, estar acostador en un lugar alto y ser el cielo yo abrazandote para que estemos bn, </p>
-            <p>se que estos son menos codigos te amo mucho amor deverdad te amo muchas gracias por estar conmigo </p>
-            <p>te amo mi niña hermosa divina preciosa, la reina de my mundo, felices 6 meses amooooooooooooooooooor te amoooooo sdjksdjskdjisjdk encuerate</p>
-            <p>//7 meses aki mensota tontota</p>
-            <p> coming soon...</p>
+            <div class="letter-content">
+                <p>Te amo demasiado, eres mi niña, mi vida, mi amor jsjsjsjsjs</p>
+                <p>Un día nos veremos y nos daremos todo lo que siempre hemos soñado</p>
+                <p>Esto lo hice para nuestro primer mes, aunque no sabía si terminaría antes del 10 jsjsjjsjs</p>
+                <p>Mi amor es muy sincero y quiero que sepas que siempre estaré para ti</p>
+                <p>Siempre, siempre me tendrás detrás tuyo jsjsjsjjssjjs te amo te amo</p>
+                <p>Eres mi novia, mi niña, mi preciosa, mi esposa.</p>
+                <p>Repito, siempre estaré para ti, te amo demasiado</p>
+                <p>Te voy a hacer lo mismo que le hago al capibara</p>
+                <p>Me sentí muy feliz el día que nos quedamos hasta tarde hablando</p>
+                <p>Ese día conociste a Pingu, es mi versión más rara que pudiste conocer</p>
+                <p>Y aun así no se te hizo raro, eso me impresionó y me dio la confianza</p>
+                <p>Para hacer todo esto, de verdad te amo mi niña hermosa</p>
+                <p> 5 MES YAAAAAAAAAAAA ABAJO DE AKI</p>
+                <p>ya van 5 meses de querernos tanto llenos de amor y mucha locuras a lo gey ksjdkjdksjikdjksd, se que esta carata ya la habia hecho pero solo recupere una parte asi que se empezo casi que a la mitad</p>
+                <p>perdoname si no es lo que esperabas, puede que este mes como era el 5 pensarias que te daria algo mejor amor pero yo siempre que veo la carta o me acordaba de ella queria mejorarla pero ya habia perdido el codigo ahora lo rercupere y lo medio mejore dskadjaksjsdkdjas</p>
+                <p>esto no es mucho amor lo se, es lo que mas me gusta para la persona que en un principio me gusto y futuramente sera mi esposa dskjdksjdksj, yo no me esperaba esto mucho menos de una noche de platicar kdjskdj es algo new </p>
+                <p>no puedo creer aun que de un lugar tan raro como rublox salio el amor de mi vida, enserio yo en un inicio pense que solo querias jugar conmigo o pasar el rato, luego vi que no, me dio miedo pq no se no soy mucho de eso</p>
+                <P>asi que una relacion asi es new pa mi amor perdoname si exagero o hago las cosas mal amor no es mi intencion hacerte mal MENOS HACERTE DAÑO PORQUE ERES LA NIÑA DE MI CORAZON MI TRALALERITA</P>
+                <p>si hiciera algo muy malo osea hacerte daño no me lo perdonaria ami mismo por dañar al amor de my vida, dejando lo tite de lado espero que sigamos asi por años hasta que nos muramos o decidas cambiarme por julian pq vive mas cerca ;( pero bno njdksjdkjsdkds</p>
+                <p>amor muchas gracias por estos 5 meses para mi han sido los mejores 5 meses de my vida entera "que bonito suenas amor 23:15 asio espero suenes en diciembre jdskjdks" ay amoooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooooor te amo</p>
+                <P>te amo demaciado amor enserio eres mi princesa hermosa divina, la reina de my mundo, felices 5 meses amooooooooooooooooooor te amoooooo sdjksdjskdjisjdk encuerate</P>
+                <p>//6 meses aki mensota tontota</p>
+                <p>si ami me huvieran dicho que tu serias mi nobia en un futuro yo no me la creeria eres la niña mas hermosa en este mundo solo tengo ojitos para ti para nadie mas, sin importar lo linda que creas que ellas puedan ser tu eres 10000 veces mas linda que ellas ante mis ojos, poruqe tu eres quien me trata bonito me hace cariñitos me ahce sentir escuchado me hace sentir amado y me hace sentir feliz and es lo que mas valoro</p>
+                <p>muchas gracias por dejarme estar a tu lado durante 6 meses repito cada mes, que es el mejor lo se lo se pero es que es la truth contigo hago cosas con quien nadie mas haria, con nadie pase mas de 4 horas en llamada pq me aburria, contigo no me aburro cada rato tengo algo que decir o pensar nunca me dejas solo siempre estas para mi AMO AMOR se que esta carta solo le hago cosas minimas pero es tardado moverle al codigo y saber donde mover sin destruir todo y mas con que apenas boy aprendiendo espero y valores lo que estoy haciendo aque pueda tener errores, perdoname por ser un mal novio amor no un mal novio no lo soy pero si una mala compañia que no te deja estar con amigos, perdoname estoy intentado quitar eso de mi pero no se cada que hablas con otro mi cerebro ya penso 100000000000000000000000000000000  maneras en ñas que me podrias engañar sin que me de cuenta</p>
+                <p>estos 6 meses e tenido nuevas experiencias contigo, cosas que jamas pense hacer con alguien o que sinceramente ni conocia pero me hace feliz hacerlo contigo podria hacer cualquier cosa contigo, caminar por la calle un dia lluvioso, caminar en fundidora viendo a los patos, caminar por mi casa platicandote todo lo que quisiera hacer contigo, estar acostador en un lugar alto y ser el cielo yo abrazandote para que estemos bn, </p>
+                <p>se que estos son menos codigos te amo mucho amor deverdad te amo muchas gracias por estar conmigo </p>
+                <p>te amo mi niña hermosa divina preciosa, la reina de my mundo, felices 6 meses amooooooooooooooooooor te amoooooo sdjksdjskdjisjdk encuerate</p>
+                <p>7 meses aki mensota tontota</p>
+                <p> estos 7 meses an sido los mejores cada dia, no puedo dejar de pensar en un dia sin ti eres la mejor amor te amo demaciado aun sigo sin creerme todo lo que a pasado en estos mese amor, peleas discuciones pero siempre an sido de mas a menos ya vamos mejoando en nuestra situacion amor, enserio muchas gracias por dejarme estar contigo este rato amor te amo demaciado eres mi pandita hermosa, aunque me estoy quedando sin ideas amor ayuda, espero este 7mo mes sea uno muy bueno para nossotros lleno de alegrias y menos peleas por tonterias amor, siempre me gusta verte te vez muy fuerte y que eres muy dura y que puedes con todo, pero a la vez eres una niña muy fragil que puede llorar por cosas simples eso me encanta jskdjskdjs no que llores si no que no eres lo que pareces miamor te amo demaciado sdjkakldjask</p>
+                <p> me acorde que quite la parte de secreto jaajajja seme hace que fue por eso que se perdio y se quedo en el otro codigo sdksjksjdks  perdon amor</p>
+                <p> bueno amor, igual espero seguir contigo todo este rato sdkljsld te amo miamor mi niña hermosa preciosa mi niña bella mi niña bonita kdjskdjkds, mi niña bonita amor muchas gracias enserio muchar garcias por darme estas bonitas enseñanzas de que no todo en la vida es malo, o muy exigente solo ser yo hablando tranquilo con mi novia sin miedo a decira lgo mal solo hablando felicez, tranquilos y bien mensos gracias amor por demostrarme que no todas son iguales, que de iguak manera tu no eres como las demas tu eres a la unica que quiero en mi vida, la unica con la que quiero estar, la unica que a llegado al fondo de mi corazon y hacerme llorar sin terminar la unca que supo de cuando estaba mal y intento apoyarme la que mejor es calentandome la que mejor es haciendome sentir especial</p>
+                <p> gracias amor por permitirme estar a tu lado gracias por apoyarme en todo gracias por ser mi novia y seguir siendolo, gracias por no dejar que esto se acabe gracias por mantener esta relacion encendida te amo demaciado miamro, ya hiciste mucho por la relacion amor ya te cansaste, es hora que yo empieze a moverme para estar listos pára la siguiente etapa, llena de mas retos y complicaciones pero tu y yo juntos, somos inseparables no importa quien quiera hacer algo tu y yo podemos contra todo nada nos separara tu seras mi esposa y yo sere tu esposo, no hay que dejar que nadie nos diga que hacer o no, que nos limiten no hay que dejar que nos depara el futuro solo hay que dejar que la vida nos lleve en su camino y que no haya ninguna piega que nos separe, pq lo unico cierto sobre nuestro futuro es que seguiremos juntos pase lo que pase, llenandonos de amor y cariño cada dia</p>
+                <p></p>
+            </div>
             
             <button class="surprise-btn" id="showSecondLetterBtn"> Descubre las cosas que amo de ti y tu cuerpesito</button>
 
@@ -795,98 +848,185 @@
             },
                     
             {
-                question: "10 quieres que lo siga mejorando o asi esta bien amor?",
+                question: "10 mi cantante favorito?",
+                options: ["ivan cornejo","misassinfonia ", "cuarteto de nos", " Bad bunny"],
+                correctAnswer: 0
+            },
+            {
+                question: "11 que es lo que mas odio de mi?",
+                options: ["mi cara","mi cuepo ", "que no soy bueno en nada", "que te hago mal y dices que no y me siento culpable por hacerte mal"],
+                correctAnswer: 3
+            },
+            {
+                question: "12 mi comida favorita?",
+                options: ["pizza","enchiladas suizas ", "tacos de trompo", "entomatadas"],
+                correctAnswer: 1
+            },
+            {
+                question: "13 fecha de mi cumpleaños?",
+                options: ["17 de julio","7 de junio ", "97 de junio", "17 de junio"],
+                correctAnswer: 3
+            },
+            {
+                question: "14 la pelicula que mas me gusto que me enseñaste?",
+                options: ["vestido de la novia","fiesta de las salchichas ", "minecraft", "la casa de los sustos"],
+                correctAnswer: 0
+            },
+            {
+                question: "15 color que mas te gusta",
+                options: ["azul","negro", "yo", "morado"],
+                correctAnswer: 2
+            },
+            {
+                question: "16 cancion favorita",
+                options: ["donde estas","M.A.I ", "orula", "AMG"],
+                correctAnswer: 0
+            },
+            {
+                question: "17 primera cosa que pienso al despertar",
+                options: ["en ti","en jugar ", "en los frijoles", "en que hare hoy"],
+                correctAnswer: 0
+            },
+            {
+                question: "18 lugar donde me gustaria ir contigo",
+                options: ["motel","go karts", "restaurante", "una montaña"],
+                correctAnswer: 3
+            },
+            {
+                question: "19 primera cosa que haremos en monterrey",
+                options: ["caminar","cojer ", "besarnos", "abrazarnos"],
+                correctAnswer: 3
+            },
+            {
+                question: "20 color de mis ojos",
+                options: ["cafe","guinda ", "azul", "amarrillo"],
+                correctAnswer: 0
+            },
+            {
+                question: "21 me amas?",
+                options: ["mucho","masomenos", "poco", "NADA 0% I HATE YOU"],
+                correctAnswer: 0
+            },
+            {
+                question: "22 mi apodo en roblox",
+                options: ["soydekenia","soydekeniacdm ", "SoyDeKeniaCDM", "SoyDeIyaCDM"],
+                correctAnswer: 3
+            },
+            {
+                question: "23 que pais me veo contigo en el futuro",
+                options: ["vivir en japon","vivir en mexico ", "vivir en noruega", "vivir en india"],
+                correctAnswer: 2
+            },
+            {
+                question: "24 cancion favorita del compa pesito",
+                options: ["14-14","AMG", "santal 33", "como capo"],
+                correctAnswer: 0
+            },
+            {
+                question: "25 que me ayuda a seguir contigo",
+                options: ["tu interes","tu amor", "tus intenciones", "todas las anteriores"],
+                correctAnswer: 3
+            },
+            {
+                question: "26 como se llama tu hermana yatzil",
+                options: ["yatzil","dania", "ana", "LA NIÑA CASTROSA QUE ME ESTRESA SU VOZ"],
+                correctAnswer: 3
+            },
+            {
+                question: "27 lo que mas me llama la atencion de ti",
+                options: ["que seas intensa","que me celes", "que seas cachonda", ""],
+                correctAnswer: 0
+            },{
+                question: "a que no te esperabas la de atras vrd jajajajaja esta es x",
+                options: ["a","a", "a", "a me vengo"],
+                correctAnswer: 3
+            },
+            {
+                question: "28 pura ...",
+                options: ["4 letras","manzanita", "CDN viejones", "doble p"],
+                correctAnswer: 0
+            },
+            {
+                question: "29 segundo nombre de mi papi",
+                options: ["rafael","donoban", "noc", "no tiene"],
+                correctAnswer: 3
+            },
+
+
+            {
+                question: "20 lo sigo mejorando? ?",
                 options: ["si amor, me gusta mucho", "No gey no te amo", " esta bn asi"],
                 correctAnswer: 0
             },
         ];
 
         // Base de datos de imágenes para la galería
-        // ¡AQUÍ ES DONDE DEBES AGREGAR LOS NOMBRES DE TUS IMÁGENES!
         const galleryImages = [
+            "kenia/KENIA 2.jpeg",
            "kenia/Captura de pantalla 2025-08-03 160132.jpg",
            "kenia/Captura de pantalla 2025-08-03 160145.jpg",
-
            "kenia/Captura de pantalla 2025-08-03 160444.jpg",
            "kenia/Captura de pantalla 2025-08-03 164219.jpg",
-
            "kenia/Captura de pantalla 2025-08-08 000553.jpg",
            "kenia/Captura de pantalla 2025-08-08 001500.jpg",
-
            "kenia/Captura de pantalla 2025-08-16 193604.jpg",
            "kenia/Captura de pantalla 2025-08-17 205119.jpg",
-           
-           "kenia/Captura de pantalla 2025-08-17 205119.jpg",
            "kenia/Captura de pantalla 2025-08-22 211050.jpg",
-
            "kenia/fotopalfeisbuk.jpg",
            "kenia/WhatsApp Image 2025-08-01 at 1.51.28 AM.jpeg",
-
            "kenia/WhatsApp Image 2025-08-01 at 1.51.29 AM.jpeg",
            "kenia/WhatsApp Image 2025-08-01 at 1.51.30 AM.jpeg",
-
            "kenia/WhatsApp Image 2025-08-01 at 1.51.32 AM (1).jpeg",
            "kenia/WhatsApp Image 2025-08-01 at 1.51.34 AM (1).jpeg",
-           
            "kenia/WhatsApp Image 2025-08-01 at 1.51.35 AM (3).jpeg",
            "kenia/WhatsApp Image 2025-08-01 at 1.51.36 AM (2).jpeg",
-
            "kenia/Captura de pantalla 2025-07-29 163137.jpg",
            "kenia/Captura de pantalla 2025-08-01 101626.jpg",
-
            "kenia/Captura de pantalla 2025-07-03 124107.jpg",
            "kenia/Captura de pantalla 2025-08-08 150801.jpg",
-
            "kenia/Captura de pantalla 2025-08-17 220724.jpg",
            "kenia/WhatsApp Image 2025-08-01 at 1.51.34 AM.jpeg",
-
            "kenia/Captura de pantalla 2025-08-23 095114.jpg",
            "kenia/Captura de pantalla 2025-08-17 205130.jpg",
-
            "kenia/Captura de pantalla 2025-08-20 233153.jpg",
            "kenia/WhatsApp Image 2025-08-01 at 1.51.30 AM (1).jpeg",
-
            "kenia/WhatsApp Image 2025-08-01 at 1.51.31 AM.jpeg",
            "kenia/WhatsApp Image 2025-08-01 at 1.51.32 AM (2).jpeg",
-
            "kenia/WhatsApp Image 2025-08-01 at 1.51.36 AM (3).jpeg",
            "kenia/WhatsApp Image 2025-08-01 at 1.51.38 AM.jpeg",
-
            "kenia/zzzzzzzzzzzzzzzzzzzzzzzzz.jpg",
            "kenia/WhatsApp Image 2025-07-31 at 2.04.51 PM.jpeg",
-
            "kenia/WhatsApp Image 2025-08-01 at 1.51.32 AM (2).jpeg",
            "kenia/Imagen de WhatsApp 2025-06-15 a las 21.15.51_923078c2.jpg",
-
            "kenia/Captura de pantalla 2025-06-14 210735.png",
            "kenia/Captura de pantalla 2025-06-20 135848.png",
-           
            "kenia/Captura de pantalla 2025-06-26 170716.jpg",
            "kenia/Captura de pantalla 2025-06-20 135931.png",
-
            "kenia/Captura de pantalla 2025-06-26 172141.jpg",
            "kenia/Captura de pantalla 2025-06-26 192024.jpg",
-
            "kenia/Captura de pantalla 2025-06-28 232202.jpg",
            "kenia/Captura de pantalla 2025-07-03 124003.jpg",
-
            "kenia/Captura de pantalla 2025-07-03 124107.jpg",
            "kenia/Captura de pantalla 2025-07-03 130651.jpg",
-
            "kenia/Captura de pantalla 2025-07-17 145057.jpg",
            "kenia/Captura de pantalla 2025-07-16 224621.jpg",
-
            "kenia/Captura de pantalla 2025-07-20 222617.jpg",
            "kenia/Captura de pantalla 2025-07-28 192459.jpg",
-
            "kenia/Captura de pantalla 2025-07-29 133309.jpg",
            "kenia/Captura de pantalla 2025-07-29 132759.jpg",
-
            "kenia/Imagen de WhatsApp 2025-06-14 a las 21.09.44_82ba96fc.jpg",
            "kenia/Captura de pantalla 2025-08-27 222021.jpg",
-
            "kenia/Captura de pantalla 2025-08-25 012115.jpg",
            "kenia/Imagen de WhatsApp 2025-06-15 a las 21.20.11_20926c19.jpg",
+           "kenia/KENIA 3.jpeg",
+            "kenia/KENIA 4.jpeg",
+            "kenia/KENIA 5.jpeg",
+            "kenia/KENIA 6.jpeg",
+            "kenia/KENIA1.jpeg",
+            "kenia/BELLA.jpeg",
+            "kenia/AYY.jpeg",
+            "kenia/DJDKKF.jpeg",
+            
         ];
 
         // Listas de mensajes
@@ -900,7 +1040,15 @@
             "viva los furros",
             "pa cuando el anillo",
             "sexo x2?",
-            "eres la mejor mi amor ❤️"
+            "eres la mejor mi amor ",
+            "yo digo que beso",
+            "NO TENGO EL ALMANAQUE",
+            "ME VAS A HACER EL AMOR?",
+            "ME VAS A HACER EL AMOR? x2",   
+            "ME VAS A HACER EL AMOR? x3",
+            "ME VAS A HACER EL AMOR? x4",
+            "ME VAS A HACER EL AMOR? x5",
+            "que elegante decir hacer el amor",
         ];
 
         const incorrectMessages = [
@@ -913,7 +1061,15 @@
             "no le sabeeee",
             "mmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmmm",
             "lo sabia no me amas",
-            "estudia más mi amor 😔"
+            "estudia más mi amor jkshdksj",
+            "mmm pero no fuera gael",
+            "VICTAMBO IRA A COJERTE",
+            "nembe chapulin",
+            "no le sabe x2",
+            "no le sabe x3",
+            "no le sabe x4",
+            "JAJAJAJAJAJJAJA    "
+
         ];
 
         // Variables globales
@@ -980,14 +1136,14 @@
             // Limpiar opciones anteriores
             questionOptions.innerHTML = '';
             
-            // Crear botones de opciones
+            
             question.options.forEach((option, i) => {
                 const button = document.createElement('button');
                 button.className = 'question-btn';
                 button.textContent = option;
                 button.dataset.index = i;
                 
-                // Si ya hay una respuesta para esta pregunta, marcar la correcta y la del usuario
+                // Si ya hay una respuesta para esta pregunta
                 if (userAnswers[index] !== undefined) {
                     if (i === question.correctAnswer) {
                         button.classList.add('correct');
@@ -1031,6 +1187,224 @@
                 
                 galleryItem.appendChild(img);
                 photoGallery.appendChild(galleryItem);
+            });
+        }
+
+        // Función para cargar el cuento
+        function loadStory() {
+            const storyContent = document.getElementById('storyContent');
+            
+            // Limpiar contenido anterior
+            storyContent.innerHTML = '';
+            
+            // Texto del cuento dividido en párrafos
+            const storyParagraphs = [
+               " CAPITULO 1 Un dia en monterrey",
+               "habia llegado el momento mas esperado por los kenia y pat, el dia en que se conocieron en persona, despues de meses de hablar por horas y horas, finalmente se verian cara a cara.",
+               "Kenia estaba nerviosa, su corazon latia con fuerza mientras se preparaba para salir por primera vez con pat. se puso un vestido rosa y se puso wapa como pat queria",
+                "Pat, por su parte, estaba emocionado y nervioso al mismo tiempo. se habia puesto su mejor camisa y se habia peinado cuidadosamente. no podia esperar para ver a kenia en persona.",
+                "ellos estaban listos para conocerse pero su corazon seguia con la emocion al mil, provocandole mariposas en el estomago.",
+                "cuando porfin pat decidio salir de su casa a las 11:12 AM. el hizo cuentas que si salia a las 11 podia llegar facilmente a las 1 con kenia y le daria tiempCo a acomodar todo y comprar unas flores para ella",
+                "kenia se estaba alistando para salir, salio a las 11:30 AM, tarde como siempre pero lista para enconmtrarse con pat en su primera salida juntos sin pantallas",
+                "",
+                "",
+                " CAPITULO 2 El encuentro",
+                "pat llego al lugar de encuentro, el estaba listo con un ramo bonito con muchas flores... girasoles las flores favoritas de kenia y listo para conquistar a la su novia en persona",
+                "kenia llego al lugar, ella estaba nerviosa pero emocionada. cuando vio a pat, su corazon se detuvo por un momento. el era incluso mas guapo en persona.",
+                "kenia y su hermana estaban viendo a pat a lo lejos, la hermana de kenia burlandose de el por verse tan nervioso",
+                "pat seguia con miedo y insertidumbre de saber donde estaba kenia ya habian pasado 20 minutos y no llegaba, el le mandaba mensajes a kenia, ella estaba atras de un puesto de churros viendo a lo lejos a pat",
+                "kenia se decidio acercarse a pat, su corazon latia con fuerza mientras se acercaba a el. cuando estuvieron lo suficientemente cerca, kenia se detuvo y lo miro a los ojos.",
+                "",
+                "",
+                "",
+                "CAPITULO 3 Amor a primera vista",
+                "pat se quedo sin palabras, kenia era incluso mas hermosa en persona. el le sonrio nerviosamente y le ofrecio las flores.",
+                "kenia las asepto con cortesia mientras la hermana de kenia",
+                "yatzil- jajaja que tontos se ven asi todos nerviosos, PONGANSE A CULIAAR",
+                "pat y kenia se quedaron bokiabiertos, no sabian como reaccionar a eso pero decidieron ignorarla y seguir con su cita",
+                "pat- hola kenia, es muy grande combinacion finalmente conocerte en persona",
+                "kenia- ay pat, gracias por las flores son hermosas y las que me gustan como supiste?",
+                "pat- siemore hablabas de flores y siempre hablas de girasoles",
+                "kenia soinrio vigorosamente",
+                "pat- pues esto parece que va empezando bien, que te parece si caminamos un rato y platicamos",
+                "kenia- me parece perfecto",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+
+                "CAPITULO 4 La cita",
+                "pat y kenia caminaron por el parque fundidora platicando sobre lo que ellos tenian pensdo el otro. se dieron cuenta de que eran el unno para el otro al hablar sin problemas por horas.",
+                "pat- amor, TE AMO mucho, desde que te conoci en rublox supe que eras especial",
+                "kenia- pat, yo tambien siento lo mismo por ti, nunca habia sentido esto",
+                "al llegar a su destino pat le tomo la mano a kenia y la miro a los ojos",
+                "pat- amor, quiero que sepas que siempre estare para ti, en las buenas y en las malas",
+                "kenia- amor, yo tambien quiero estar contigo siempre, eres el hombre de mis sueños",
+                "Pat y kenia llegaron al lugar donde vendian bicis, el estaba emocionado por enseñarle a kenia a andar en bici",
+                "pat- amor, te enseñare a andar en bici, es muy divertido",
+                "kenia- amor, yo nunca he andado en bici, pero confio en ti",
+                "pat- no te preocupes, yo te enseñare, sera divertido",
+                "kenia se subio a la bici con la ayuda de pat, al principio estaba un poco insegura pero con el apoyo de pat, pronto se sintio comoda y feliz",
+                "pat- amor, no te vallas a caer o te la meto en el piso",
+                "kenia despues de escuchar eso se rio mucho y le dijo",
+                "kenia- ups me cai ahora metemela",
+                "pat- jaja cochinota kdsjdkjdk va", 
+                "despues pat se bajo los pantalones y le metio a kenia y pum pum pum ahsta venirse dentro de ella ",
+                "pat- *golpeo a kenia en la cara* ¡¡AMOR!! ¡¡¡AMOOOOOOOOOOOOOOOOOOOOOOOOOOR!!!",
+                "RESULTA QUE KENIA SE A CAIDO Y SE PEGO MUY FUERTE EN LA CABEZA Y SE IMAGINO TODO ESO",
+                "pat- ammor estas bien amor?",
+                "kenia- si amor estoy bien solo me di un golpe fuerte en la cabeza",
+                "pat- menos mal amor, pense que te habia hecho daño",
+                "kenia- no amor, solo fue un golpe, pero gracias por preocuparte",
+                "pat- siempre me preocupo por ti amor, eres lo mas importante para mi",
+                "kenia- y tu para mi amor, nunca habia sentido esto por nadie",
+                "despúes siguieron su camino pat encima de la bici y kenia caminando a su lado tomados de la mano",
+                "pat- amor, quiero que sepas que siempre estare para ti, en las buenas y en las malas",
+                "kenia- amor, yo tambien quiero estar contigo siempre, eres el hombre de mis sueños",
+                "despues llegaron a un lugar donde vendian helados",
+                "pat- amor, que sabor de helado quieres?",
+                "kenia- amor, quiero un helado de chocomenta es mi favorito",
+                "pat- perfecto amor, yo tambien quiero uno de chocomenta",
+                "pat y kenia se sentaron en una banca que estaba cerca, acomodaron sus bicis y disfrutaron de su helado juntos",
+                "pat- amor, este helado es delicioso, pero no tanto como tu",
+                "kenia- ay si loko, deja la koka",
+                "pat- jaja es que es verdad amor, eres la mujer mas hermosa que he conocido",
+                "kenia- pat, tu tambien eres muy bonito hermoso precioso",
+                "pat la mira sonrojado y le dice",
+                "pat- crees enverdad despues de verme que soy lindo?",
+                "kenia- si amor eres muy lindo",
+                "pat- ay amor me haces sentir tan especial",
+                "kenia- y tu a mi amor",
+                "despues salienron con sus bicis a dar un paseo por el parque",
+                "ya casi llegando a la hora de entregar las bicis",
+                "pat- kenia, que te parece si vamos a comer algo antes de que se nos haga tarde",
+                "kenia- me parece perfecto amor, tengo hambre",
+                "pat- entonces vamos a un lugar que me gusta mucho, se llama el klnia's",
+                "kenia- a caray cualesese",
+                "pat- es un lugar muy riko donde venden vaginita de kenia, tetas de kenia y culito de kenia",
+                "kenia- jaja que cochinote eres amorrrrr",
+                "pat- jaja es que es verdad amor, eres la mujer mas hermosa que he conocido",
+                "pat- dejando de jugar amor, vamos a comer algo riko",
+                "kenia- si amor tengo mucha hambre",
+                "pat y kenia llegaron al restaurante, pidieron su comida y disfrutaron de una cena romantica juntos",
+                "pat- amor, este lugar es muy bonito, pero no tanto como tu",
+                "kenia- ay si loko, deja la koka",  
+                "comienton juntos despues al llegar a donde se entregan las bicis",
+                "pat- entonces, esto es un hasta mañana? no quieres salir a caminar un rato mas?",
+                "kenia- pat, me encantaria pero ya es tarde, mmmm bueno si quiero salir a caminar un rato mas contigo",
+                "CAPITULO 5 La escapada y un final feliz ",
+                "pat y kenia caminaron por el parque, disfrutando de la noche juntos. se sentian felices y enamorados",
+                "pat- amor, esta noche me recuerda a ti miamor, siempre oscura kadjkajskjdkajdkasjdjask!",
+                "kenia- puto akdjskdjasdjdkas   ",
+                "pat- entonces, que te parece si vamos a un lugar mas privado?",
+                "kenia- me encantaria pero no se donde",
+                "pat- no te preocupes amor, yo conozco un lugar perfecto",
+                "kenia- esta bien",
+                "pat llevo a kenia a un lugar tranquilo y privado, donde podian estar solos. se sentaron en la hierba y se miraron a los ojos",
+                "pat- entonces amor, que te parece si hacemos algo mas intimo?",
+                "kenia- uy que como que que que jajaja, siiisisis pero que haremos?",
+                "pat- amor, quiero besarte, quiero sentirte cerca de mi",
+                "kenia- amor, yo tambien quiero sentirte cerca de mi",
+                "pat y kenia se besaron apasionadamente, sintiendo el calor del otro. pat la abrazo con fuerza y la llevo a un lugar mas privado",
+                "pat- uy amorsito esas tetas y ese qlote me estan hablando eh",
+                "kenia- ay paaat, que dices si metes tu cabeza entre mis tetas y me besas",
+                "pat- ay jalo vamos",
+                "pat y kenia se besaron y acariciaron, sintiendo el deseo crecer entre ellos. pat la desabrocho la blusa y comenzo a besar sus pechos",
+                "kenia- ay amor, eso se siente tan bien",
+                "pat- amoshito, tu cuerpo es tan hermoso, quiero explorarlo todo",
+                "kenia- pat, yo tambien quiero explorar tu cuerpo",
+                "pat y kenia se desnudaron, sintiendo la piel del otro. pat la acaricio y la beso, sintiendo el deseo crecer entre ellos",
+                "pat- quiero hacerte el amor, quiero sentirte dentro de mi",   
+                "kenia- patricioooo no podemos aqui, nos escucharan",
+                "pat- no te preocupes amor, nadie nos escuchara",
+                "pat y kenia se acostaron en la hierba, sintiendo el calor del otro. pat la penetro con suavidad, sintiendo el deseo crecer entre ellos",
+                "kenia- entonces amor que dices si envez de decirme que no nos escucharan, me empiezas a lamer todo el cuerpo",
+                "pat- ay kenia que rico se escucha eso",
+                "pat comenzo a besar y lamer el cuerpo de kenia, sintiendo el deseo crecer entre ellos. kenia gemia de placer, sintiendo el calor del otro",
+                "pat- amor, tu cuerpo es tan hermoso, quiero explorarlo todo", 
+                "pat empezo a lamer desde los pies hasta llegar a su entrepierna",
+                "kenia- ay amor que rico se siente eso",
+                "kenia- amor, quiero sentirte dentro de mi",  
+                "pat- amor, yo tambien quiero sentir tu interios como me aprieta",
+                "pat y kenia se amaron con pasión, sintiendo el deseo crecer entre ellos. kenia pidio que pat se bajara los pantalones y le dejara 10 minutos con su chilito",
+                "kenia- amor puedes bajarte los pantalones y dejarme 10 minutos con tu chilito",
+                "pat- amoooor?? jalo djksjdksjdksj",
+                "pat se bajo los pantalones y dejo que kenia jugara con su chilito, CADA TOQUE DE KENIA HACIA QUE PAT SE PUSIERA MAS DURO Y SE LE PARARA MAS EL CHILITO",
+                "kenia- esto te gusta??",
+                "pat- (entre gemidos) ay-ay-ay si amor si a-mor ay si sigue tocandolo asi",
+                "kenia- que rico se ve tu chilito amor, quiero sentirlo dentro de mi", 
+                "kenia mete el chilito de pat en su boca y comienza a chuparlo con ganas, pat entre gemidos le dice",
+                "pat- ay amor si sigue asi me voy a venir",
+                "kenia- amor no te vayas a venir todavia quiero sentirlo en mi boca",
+                "pat- amor amor amor amor amor amor amor amor amor, me boy a venir amor amor amor amor amor amor amor amor amor amor",
+                "pat se vino en la boca de kenia, ella lo disfruto mucho y le gusto sentir el sabor de pat en su boca",
+                "kenia- que rico se siente tu semencito en mi boca amor",
+                "pat- ay amor que rico se siente tu interior",
+                "kenia- amor mmm mira que dices si me acuesto y me metes tu chilito ",
+                "pat se acomodo entre las piernas de kenia ",
+                "pat- amor sabes donde estan los condones??",
+                "kenia- si amor estan en mi bolsa",
+                "pat- amor me los traes porfa??",
+                "kenia- si amor aqui estan",
+                "pat- amor eres la mejor, gracias por traerme los condones",
+                "pat se puso el condon",
+                "pat- amor ahora si puedo metertelo??",
+                "kenia- si amor metemelo ya",
+                "pat entro en kenia lentamente, sintiendo el calor de su cuerpo. kenia gemia de placer",
+                "pat- amor amor ay enserio esto es tu interior (solo metiendo la punta)",
+                "kenia- (entre gemidos) ay amor, onbv--io es mi inte-rior",
+                "pat- amor lo puedo meter todo??",
+                "kenia- si amor metelo todo",
+                "pat entro en kenia completamente, sintiendo el calor de su cuerpo. kenia gemia de placer",
+                "pat- ay amor que rico se siente esto",
+                "kenia- ay amor si se siente tan bien",
+                "pat empezo a moverse mas rapido siempre teniendo cuidado de no dañar a kenia",
+                "kenia- ay amor sigue asi me gusta mucho",
+                "pat- ay amor yo tambien me siento muy bien contigo", 
+                "pat empezando a sentir que se venia le dijo a kenia",
+                "pat- amor amor amor amor amor amor amor",
+                "kenia- que amor??",
+                "pat- amor me voy a venir amor amor amor amor amor amor amor amor amor",
+                "kenia- vamos amor-- ven-te den-tro de mi",
+                "pat empezo a moverse muy rapido en el interios de kenia",
+                "pat- amor amor amor amor amor amor amor amor amor",
+                "kenia- si amor vente dentro de mi",
+                "pat- amor amor amor amor amor amor amor amor amor",
+                "pat- amor amor amor amor amor amor amor amor amor",
+                "pat- amor amor amor amor amor amor amor amor amor",
+                "pat- (entre gemidos) ay amor si me voy a venir amor amor amor amor amor amor amor amor amor",
+                "kenia - (entre gemidos) amor vamos vente dentro de mi soy toda tuya soy tu puta",
+                "pat- (entre gemidos) ayyyy m,i puta, mi novia es mi puta es lo mej--or",
+                "pat se vino dentro de kenia, sintiendo el calor de su cuerpo. kenia gemia de placer, sintiendo el semen de pat dentro de ella",
+                "kenia- ay amor, que rico se siente tu pene en mi vagina",
+                "pat- ay amor si el mio se siente asi, imagina tu vagina se siente 100000 veces mejor, no pude aguantar ",
+                "kenia- otra ronda?",
+                "parte 2 proximamente",
+        
+
+
+            ];
+            
+            // Crear elementos para cada párrafo
+            storyParagraphs.forEach((paragraph, index) => {
+                const p = document.createElement('p');
+                p.textContent = paragraph;
+                storyContent.appendChild(p);
+                
+                // Agregar imagen después de algunos párrafos clave
+                if (index === 0 || index === 8 || index === 16) {
+                    const img = document.createElement('img');
+                    img.className = 'story-image';
+                    // Usar imágenes aleatorias de la galería para ilustrar el cuento
+                    img.src = galleryImages[Math.floor(Math.random() * galleryImages.length)];
+                    img.alt = "Ilustración de nuestro cuento";
+                    storyContent.appendChild(img);
+                }
             });
         }
 
@@ -1123,6 +1497,7 @@
             toggleElement(document.getElementById('thirdLetter'), false);
             toggleElement(document.getElementById('questionsLetter'), false);
             toggleElement(document.getElementById('galleryLetter'), false);
+            toggleElement(document.getElementById('storyLetter'), false);
 
             document.querySelector('.envelope-container').classList.add('open');
             document.getElementById('background').style.opacity = '1';
@@ -1137,6 +1512,7 @@
             toggleElement(document.getElementById('secondLetter'), false);
             toggleElement(document.getElementById('questionsLetter'), false);
             toggleElement(document.getElementById('galleryLetter'), false);
+            toggleElement(document.getElementById('storyLetter'), false);
 
             toggleElement(document.getElementById('thirdLetter'), true);
             document.getElementById('closeBtn').style.display = 'none';
@@ -1150,6 +1526,7 @@
             toggleElement(document.getElementById('secondLetter'), false);
             toggleElement(document.getElementById('thirdLetter'), false);
             toggleElement(document.getElementById('galleryLetter'), false);
+            toggleElement(document.getElementById('storyLetter'), false);
 
             toggleElement(document.getElementById('questionsLetter'), true);
             document.getElementById('closeBtn').style.display = 'none';
@@ -1166,6 +1543,7 @@
             toggleElement(document.getElementById('secondLetter'), false);
             toggleElement(document.getElementById('thirdLetter'), false);
             toggleElement(document.getElementById('questionsLetter'), false);
+            toggleElement(document.getElementById('storyLetter'), false);
 
             toggleElement(document.getElementById('galleryLetter'), true);
             document.getElementById('closeBtn').style.display = 'none';
@@ -1173,6 +1551,23 @@
             
             // Cargar galería
             loadGallery();
+        });
+
+        // Menú: Mostrar cuento
+        document.getElementById('showStoryBtn').addEventListener('click', function() {
+            document.querySelector('.envelope-container').classList.remove('open');
+            document.getElementById('background').style.opacity = '0';
+            toggleElement(document.getElementById('secondLetter'), false);
+            toggleElement(document.getElementById('thirdLetter'), false);
+            toggleElement(document.getElementById('questionsLetter'), false);
+            toggleElement(document.getElementById('galleryLetter'), false);
+
+            toggleElement(document.getElementById('storyLetter'), true);
+            document.getElementById('closeBtn').style.display = 'none';
+            createConfetti();
+            
+            // Cargar cuento
+            loadStory();
         });
 
         // Cerrar tercera carta
@@ -1188,6 +1583,11 @@
         // Cerrar carta de galería
         document.getElementById('closeGalleryLetter').addEventListener('click', function() {
             toggleElement(document.getElementById('galleryLetter'), false);
+        });
+
+        // Cerrar carta de cuento
+        document.getElementById('closeStoryLetter').addEventListener('click', function() {
+            toggleElement(document.getElementById('storyLetter'), false);
         });
 
         // Navegación entre preguntas
